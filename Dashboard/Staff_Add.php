@@ -64,7 +64,7 @@
                         </label>
                     </div>
                     <div class="row mt-3">
-                        <button type="submit" name="addDoctor" class="btn btn-primary btn-sm mt-2">Save</button>
+                        <button type="submit" name="addStaff" class="btn btn-primary btn-sm mt-2">Save</button>
                     </div>
                 </div>
                 </form>
