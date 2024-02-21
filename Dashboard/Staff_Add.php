@@ -12,7 +12,7 @@
         </div>
         <span class="d-grid mx-auto mt-3 mb-3" style="border-bottom:0.5px solid rgb(241, 240, 240);"></span>
         <div class="row pt-2 ps-5 pe-5 ms-5 me-5">
-            <div style="background-color: rgb(249, 250, 215); " class="col">
+            <div style="background-color: rgb(249, 250, 215); " class="col-4">
                 <div class="row pt-3 mb-2">
                     <div class="col">
                         <div class="ms-3">
@@ -38,7 +38,7 @@
                                     $query_deptShow = mysqli_query($con,"SELECT * FROM services ORDER BY services_name");
                                     while($result_deptShow = mysqli_fetch_array($query_deptShow)){
                                 ?>
-                                <option value="<?php echo $result_deptShow['services_name']; ?>"><?php echo $result_deptShow['services_name']; ?></option>
+                                <option value="<?php echo $result_deptShow['services_id']; ?>"><?php echo $result_deptShow['services_name']; ?></option>
                                 <?php
                                     }
                                 ?>
@@ -47,6 +47,10 @@
                         <div class="col">
                             <span><button type="button" class="btn btn-secondary btn-sm mt-4" data-bs-toggle="modal" data-bs-target="#SpecialityModal">Add Another Services</button></span>
                         </div>
+                    </div>
+                    <div class="row-sm-4">
+                        <label class="form-label">Position</label>
+                        <input class="form-control " name="Staff_Position" placeholder="Position">
                     </div>
                     <div class="row-sm-4">
                         <label class="form-label">Phone</label>
@@ -58,7 +62,7 @@
                         <input class="form-control " type="date" name="Staff_Register">
                     </div>
                     <div class="row-sm-3">
-                        <input class="form-check-input" type="checkbox" value="yes" checked>
+                        <input class="form-check-input" name="isActive" type="checkbox" value="yes" checked>
                         <label class="form-check-label" for="flexCheckChecked">
                             isActive
                         </label>
@@ -74,30 +78,130 @@
                     <div class="overflow-auto p-3" style="max-width: auto; max-height: 600px;">
                         <ol class="list-group list-group-numbered">
                             <?php
-                                $query_deptStaff = mysqli_query($con,"SELECT * FROM doctorall ORDER BY DoctorAll_ID DESC ");
+                                $query_deptStaff = mysqli_query($con,"SELECT * FROM user ORDER BY user_id DESC ");
                                 while($result_deptStaff = mysqli_fetch_array($query_deptStaff)){
-                                $FK_Hosp_ID = $result_deptStaff['FK_Hosp_ID'];
-                                $FK_Speciality_ID = $result_deptStaff['FK_Speciality_ID'];
+                                $fk_services_id = $result_deptStaff['fk_services_id'];
+                                $staff_id = $result_deptStaff['user_id'];
                             ?>
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <li class="list-group-item d-flex align-items-start">
                                 <div class="ms-2 me-auto">
-                                    <div class="fw-bold"><?php echo $result_deptStaff['DoctorAll_Name']; ?></div>
+                                    <div class="fw-bold">
+                                        <?php echo $result_deptStaff['user_fname']; ?> 
+                                        [<?php  echo $result_deptStaff['user_staffid']; ?>]
+                                        <button type="button" class="btn-sm btn-info position-relative rounded-circle">
+                                            <i class="bi bi-truck"></i>
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                1
+                                                <span class="visually-hidden">unread messages</span>
+                                            </span>
+                                            </button>
+                                    </div>
+                                        <?php
+                                            if($result_deptStaff['user_isactive']=='yes'){
+                                                echo '<i class="bi bi-check-square-fill" style="color:green"></i>';
+                                            }else{
+                                                echo '<i class="bi bi-x-square-fill" style="color:red"></i>';
+                                            }
+                                            echo ' Date Register : '.''.$result_deptStaff['user_dateregister'];
+                                        ?>
                                         <!-- Get Specilaity Name -->
-                                        <?php  echo $FK_Speciality_ID; ?>
+                                        
+                                        
                                         <!-- Get Department Name --><br/>
                                         <?php
-                                            $query_getDept = mysqli_query($con,"SELECT Hosp_Name FROM hospital WHERE Hosp_ID = '$FK_Hosp_ID'");
+                                            $query_getDept = mysqli_query($con,"SELECT services_name FROM services WHERE services_id = '$fk_services_id'");
                                             while($result_getDept = mysqli_fetch_array($query_getDept)){
-                                                echo $result_getDept['Hosp_Name'];
+                                                echo $result_getDept['services_name'];
                                             }
+                                            echo ' - '.''.$result_deptStaff['user_position'];
                                         ?>
-                                        <!--
-                                    <button type="button" class="btn btn-info btn-sm disabled"><?php echo $result_deptStaff['Staff_SpeedDial']; ?><span class="badge bg-dark ms-2">SD</span></button>
-                                    <button type="button" class="btn btn-primary btn-sm disabled"><?php echo $result_deptStaff['Staff_Ext']; ?><span class="badge bg-dark ms-2">EXT</span></button>
-                                    <div class="fw-bold"><?php echo $result_deptStaff['Staff_Email']; ?></div>
-                                        -->
                                 </div>
+                                <div class="p-2">
+                                    <button type="submit"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit<?php echo $staff_id ?>">Add Car</button>
+                                    <button type="submit"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit<?php echo $staff_id ?>">Edit Profile</button>
+                                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete<?php echo $staff_id ?>">Delete</button>
+                                </div>
+                                
+                                <!-- Delete Modal -->
+                                <div class="modal fade" id="delete<?php echo $staff_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel">Delete <?php echo $result_deptStaff['user_fname'].''.' ['.$result_deptStaff['user_staffid'].']';?></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                            <div class="modal-body">
+                                                Are you want to delete? <strong><?php echo $result_deptStaff['user_fname']; ?><?php echo $staff_id; ?></strong>      
+                                            </div> 
+                                            <div class="modal-footer">
+                                            <form method="post">
+                                                <input type="hidden" value="<?php echo $staff_id; ?>" name="idDelete" />
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" name="deleteStaff" class="btn btn-danger">DELETE</button>
+                                            </form>
+                                            </div>   
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                 <!-- Edit Modal -->
+                                    <div class="modal fade" id="edit<?php echo $staff_id?>" tabindex="-1" aria-labelledby="editModalLabel" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel">Edit <strong><?php echo $phone_id?></strong> ?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                                <form method="post">
+                                                <div class="modal-body">
+                                                <div class="form-group row">
+                                                    
+                                                    <div class="col-sm-12">
+                                                    <label>Name</label>
+                                                        <input class="form-control" placeholder="Enter Name" name="nameEdit" value="<?php echo $result_showData['Staff_FName']; ?>" required autofocus="autofocus" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    
+                                                    <div class="col-sm-12">
+                                                    <label>Designation</label>
+                                                        <input class="form-control" placeholder="Enter Designation" name="designationEdit" value="<?php echo $result_showData['Staff_Designation']; ?>" required autofocus="autofocus" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    
+                                                    <div class="col-sm-3">
+                                                    <label>Extension</label>
+                                                    <input class="form-control" placeholder="Extension" name="extEdit" value="<?php echo $result_showData['Staff_Ext']; ?>" required autofocus="autofocus" />
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                    <label>Speed Dial</label>
+                                                    <input class="form-control" placeholder="Speed Dial" name="dialEdit" value="<?php echo $result_showData['Staff_SpeedDial']; ?>" required autofocus="autofocus" />
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                    <label>Email</label>
+                                                    <input class="form-control" placeholder="Email" name="emailEdit" value="<?php echo $result_showData['Staff_Email']; ?>" required autofocus="autofocus" />
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                
+                                                <div class="modal-footer">
+                                                <input type="hidden" value="<?php echo $phone_id?>" name="idEdit" />
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" name="editProduct" class="btn btn-primary">Save</button>
+                                                </form>
+                                                </div>   
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                
                             </li>
+                            
                             <?php
                                 }
                             ?>
@@ -116,18 +220,18 @@
     <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Add Doctor Speciality </strong></h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="editModalLabel">Add New Services </strong></h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
         <form method="POST">
             <div class="row mb-3 mt-4">   
-                <label class="col-sm-2 col-form-label">Speciality</label>
+                <label class="col-sm-2 col-form-label">Services</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="add_speciality" required/>
+                    <input type="text" class="form-control" name="services_name" required/>
                 </div>
             </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" name="saveSpeciality" type="submit">Save</button>
+            <button class="btn btn-primary" name="saveServices" type="submit">Save</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
         </form>   
@@ -140,58 +244,52 @@
 
 
 <?php
-    if(isset($_POST['addDoctor'])){
-        $Consultant_Name = $_POST['Consultant_Name'];
-        $fk_speciality = $_POST['fk_speciality'];
-        $SubSpecial = $_POST['SubSpecial'];
-        $Consultant_Email = $_POST['Consultant_Email'];
-        $Consultant_Ext = $_POST['Consultant_Ext'];
-        $fk_hospital = $_POST['fk_hospital'];
-        date_default_timezone_set("Asia/Kuala_Lumpur");
-        $todayDate = date('d/m/Y');
-        $todayTime = date('h:i a');
+    if(isset($_POST['addStaff'])){
+        $Staff_Name = $_POST['Staff_Name'];
+        $Staff_Id = $_POST['Staff_Id'];
+        $fk_services = $_POST['fk_services'];
+        $Staff_Position = $_POST['Staff_Position'];
+        $Staff_Phone = $_POST['Staff_Phone'];
+        $Staff_Register = $_POST['Staff_Register'];
+        $isActive = $_POST['isActive'];
+        if($isActive==''){
+            $isActive = 'no';
+        }
+        // date_default_timezone_set("Asia/Kuala_Lumpur");
+        // $todayDate = date('d/m/Y');
+        // $todayTime = date('h:i a');
 
-        $query_addStaff = mysqli_query($con, "INSERT INTO doctorall(DoctorAll_Name, DoctorAll_Phone, DoctorAll_Email, DoctorAll_SubD, FK_Speciality_ID, FK_Hosp_ID) 
-        VALUES ('$Consultant_Name','$Consultant_Ext','$Consultant_Email','$SubSpecial','$fk_speciality','$fk_hospital')");
+        $query_addStaff = mysqli_query($con, "INSERT INTO user(user_fname, user_staffid, user_phone, user_position, user_dateregister, user_isactive, fk_services_id) 
+        VALUES ('$Staff_Name','$Staff_Id','$Staff_Phone','$Staff_Position','$Staff_Register','$isActive','$fk_services')");
 
         $_SESSION['message'] = 'Successfully update information';   
-        echo '<script>window.location.href="Doctor_Add.php?msg=success"</script>';
+        echo '<script>window.location.href="Staff_Add.php?msg=success"</script>';
 
     }
 
-    if(isset($_POST['saveSpeciality'])){
-        $speciality_name = $_POST['add_speciality'];
-        $check_name = mysqli_query($con,"SELECT * FROM speciality WHERE Speciality_Name = '$speciality_name'");
+    if(isset($_POST['saveServices'])){
+        $services_name = $_POST['services_name'];
+        $check_name = mysqli_query($con,"SELECT * FROM services WHERE services_name = '$services_name'");
         $result_name = mysqli_fetch_array($check_name);
         if($result_name>0){
-            $_SESSION['message'] = 'Duplicated Speciality, Please add other speciality';   
+            $_SESSION['message'] = 'Duplicated Services, Please add other services';   
         }else{
             //If username not exist insert into 'login' db
-            $query_update = mysqli_query($con,"INSERT INTO speciality(Speciality_Name) VALUES ('$speciality_name')");
+            $query_update = mysqli_query($con,"INSERT INTO services(services_name) VALUES ('$services_name')");
             $_SESSION['message'] = 'Successfully update information';   
-            echo '<script>window.location.href="Doctor_Add.php?msg=success"</script>';
+            echo '<script>window.location.href="Staff_Add.php?msg=success"</script>';
             //$_SESSION['message'] = 'Successfully update information';   
             //echo '<script>window.location.href="User_Add.php?msg=success"</script>';   
         }
 
     }
 
-    if(isset($_POST['saveDepartment'])){
-        $dept_name = $_POST['dept_name'];
-        $dept_level = $_POST['dept_level'];
-        $check_name = mysqli_query($con,"SELECT * FROM department WHERE Dept_Name = '$dept_name'");
-        $result_name = mysqli_fetch_array($check_name);
+    if(isset($_POST['deleteStaff'])){
+        $idDelete = $_POST['idDelete'];
 
-        if($result_name>0){
-            $_SESSION['message'] = 'Duplicated Department, Please add other department';   
-        }else{
-            //If username not exist insert into 'login' db
-            $query_update = mysqli_query($con,"INSERT INTO department(Dept_Name,Dept_Floor) VALUES ('$dept_name','$dept_level')");
-            $_SESSION['message'] = 'Successfully update information';   
-            echo '<script>window.location.href="User_Add.php?msg=success"</script>';
-            //$_SESSION['message'] = 'Successfully update information';   
-            //echo '<script>window.location.href="User_Add.php?msg=success"</script>';   
-        }
+        $query_deleteStaff = mysqli_query($con, "DELETE FROM user WHERE user_id = '$idDelete'");
+        $_SESSION['message'] = 'Successfully delete information';   
+        echo '<script>window.location.href="Staff_Add.php?msg=success"</script>';
 
     }
 ?>
