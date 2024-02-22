@@ -1,0 +1,55 @@
+USER
+-full name
+-staff_id
+-staff_type
+-phone_number
+-services
+-position
+-date_register
+-status
+
+Health_record
+-healthType
+	-pregnantLeave
+	-ChronicIllness
+-startDate_Health
+-period_Health
+-remarks
+-iscardreturned
+-datecreation
+-datecardreturn
+-fk_card_id
+-fk_staff_id
+
+Car_record
+-plate_number
+-car_model
+-car_brand
+-car_color
+-fk_staff_id
+
+Services
+-services_name
+
+Employee_type
+-type_list
+	- staff
+	- consultant
+	- management
+	- visiting
+	- outsource
+
+Card
+-serialnumber
+-numbercard
+-dateregisterd
+-iscardinuse
+-isactive
+______________________________
+Parking Internal
+-fk_user_id
+-no_access_card
+-serial_num
+-lot parking
+-isStatus
+	-reserved
