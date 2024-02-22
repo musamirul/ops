@@ -30,6 +30,19 @@
                         <label class="form-label">Staff ID</label>
                         <input class="form-control " name="Staff_Id" placeholder="Staff ID Number">
                     </div>
+                    <div class="row-sm-4">
+                        <label class="form-label">Employee Type</label>
+                        <select name="Staff_Type" class="form-select ">
+                                <?php
+                                    $query_empShow = mysqli_query($con,"SELECT * FROM employee_type ORDER BY emptype_id");
+                                    while($result_empShow = mysqli_fetch_array($query_empShow)){
+                                ?>
+                                <option value="<?php echo $result_empShow['emptype_id']; ?>"><?php echo $result_empShow['emptype_name']; ?></option>
+                                <?php
+                                    }
+                                ?>
+                        </select>
+                    </div>
                     <div class="row">
                         <div class="col-9">
                             <label class="form-label">Services </label>
@@ -45,7 +58,7 @@
                             </select>
                         </div>
                         <div class="col">
-                            <span><button type="button" class="btn btn-secondary btn-sm mt-4" data-bs-toggle="modal" data-bs-target="#SpecialityModal">Add Another Services</button></span>
+                            <span><button type="button" class="btn btn-secondary btn-sm mt-4" data-bs-toggle="modal" data-bs-target="#SpecialityModal">Add Services</button></span>
                         </div>
                     </div>
                     <div class="row-sm-4">
@@ -82,16 +95,26 @@
                                 while($result_deptStaff = mysqli_fetch_array($query_deptStaff)){
                                 $fk_services_id = $result_deptStaff['fk_services_id'];
                                 $staff_id = $result_deptStaff['user_id'];
+                                $staff_name = $result_deptStaff['user_fname'];
+                                $staff_type = $result_deptStaff['user_type'];
+                                $staff_isactive = $result_deptStaff['user_isactive'];
+                                
+                            ?>
+                            <?php
+                                 $query_countreq = mysqli_query($con,"SELECT count(*) FROM car_record WHERE fk_staff_id = '$staff_id'");
+                                 $result_countreq = mysqli_fetch_array($query_countreq);
+                                 $reqcount = $result_countreq[0];
+                                 
                             ?>
                             <li class="list-group-item d-flex align-items-start">
                                 <div class="ms-2 me-auto">
                                     <div class="fw-bold">
                                         <?php echo $result_deptStaff['user_fname']; ?> 
                                         [<?php  echo $result_deptStaff['user_staffid']; ?>]
-                                        <button type="button" class="btn-sm btn-info position-relative rounded-circle">
+                                        <button type="button" class="btn-sm <?php if($reqcount==0){echo 'btn-warning';}else{echo 'btn-info';} ?> position-relative rounded-circle">
                                             <i class="bi bi-truck"></i>
                                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                1
+                                                <?php echo $reqcount; ?>
                                                 <span class="visually-hidden">unread messages</span>
                                             </span>
                                             </button>
@@ -117,10 +140,56 @@
                                         ?>
                                 </div>
                                 <div class="p-2">
-                                    <button type="submit"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit<?php echo $staff_id ?>">Add Car</button>
+                                    <button type="submit"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addCar<?php echo $staff_id ?>">Add Car</button>
                                     <button type="submit"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit<?php echo $staff_id ?>">Edit Profile</button>
                                     <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete<?php echo $staff_id ?>">Delete</button>
                                 </div>
+
+                                <!-- Add Car Modal -->
+                                <!-- Edit Modal -->
+                                    <div class="modal fade" id="addCar<?php echo $staff_id?>" tabindex="-1" aria-labelledby="editModalLabel" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel">Add Car to : <strong><?php echo $staff_name?></strong> ?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                                <form method="post">
+                                                <div class="modal-body">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                    <label>Car Brand</label>
+                                                        <input class="form-control" placeholder="Enter Car Brand" name="car_brand" required autofocus="autofocus" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                    <label>Car Model</label>
+                                                        <input class="form-control" placeholder="Enter Model" name="car_model" required autofocus="autofocus" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                    <label>Plate Number</label>
+                                                        <input class="form-control" placeholder="Plate Number" name="car_platenum"  required autofocus="autofocus" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                    <label>Car Color</label>
+                                                        <input class="form-control" placeholder="Car Color" name="car_color" required autofocus="autofocus" />
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input type="hidden" value="<?php echo $staff_id;?>" name="idAddCarHidden" />
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" name="addCar" class="btn btn-primary">Save</button>
+                                                </form>
+                                                </div>   
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 
                                 <!-- Delete Modal -->
                                 <div class="modal fade" id="delete<?php echo $staff_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
@@ -150,56 +219,82 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel">Edit <strong><?php echo $phone_id?></strong> ?</h5>
+                                                <h5 class="modal-title" id="editModalLabel">Edit <strong><?php echo $staff_name?></strong> ?</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                                 <form method="post">
                                                 <div class="modal-body">
                                                 <div class="form-group row">
-                                                    
                                                     <div class="col-sm-12">
                                                     <label>Name</label>
-                                                        <input class="form-control" placeholder="Enter Name" name="nameEdit" value="<?php echo $result_showData['Staff_FName']; ?>" required autofocus="autofocus" />
+                                                        <input class="form-control" placeholder="Enter Name" name="nameEdit" value="<?php echo $staff_name; ?>" required autofocus="autofocus" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    
                                                     <div class="col-sm-12">
-                                                    <label>Designation</label>
-                                                        <input class="form-control" placeholder="Enter Designation" name="designationEdit" value="<?php echo $result_showData['Staff_Designation']; ?>" required autofocus="autofocus" />
+                                                    <label>Staff ID</label>
+                                                        <input class="form-control" placeholder="Enter Designation" name="idEdit" value="<?php echo $result_deptStaff['user_staffid']; ?>" required autofocus="autofocus" />
                                                     </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                    <label class="form-label">Employee Type</label>
+                                                    <select name="typeEdit" class="form-select ">
+                                                            <?php
+                                                                $query_empShow = mysqli_query($con,"SELECT * FROM employee_type ORDER BY emptype_id");
+                                                                while($result_empShow = mysqli_fetch_array($query_empShow)){
+                                                            ?>
+                                                            <option value="<?php echo $result_empShow['emptype_id']; ?>"<?php if($result_empShow['emptype_id']==$staff_type){echo 'selected';} ?>><?php echo $result_empShow['emptype_name']; ?></option>
+                                                            <?php
+                                                                }
+                                                            ?>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                    <label class="form-label">Services </label>
+                                                    <select name="servicesEdit" class="form-select ">
+                                                        <?php
+                                                            $query_deptShow = mysqli_query($con,"SELECT * FROM services ORDER BY services_name");
+                                                            while($result_deptShow = mysqli_fetch_array($query_deptShow)){
+                                                        ?>
+                                                        <option value="<?php echo $result_deptShow['services_id']; ?>" <?php if($result_deptShow['services_id']==$fk_services_id){echo 'selected';} ?>><?php echo $result_deptShow['services_name']; ?></option>
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                    </select>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    
-                                                    <div class="col-sm-3">
-                                                    <label>Extension</label>
-                                                    <input class="form-control" placeholder="Extension" name="extEdit" value="<?php echo $result_showData['Staff_Ext']; ?>" required autofocus="autofocus" />
+                                                    <div class="col">
+                                                        <label class="form-label">Position</label>
+                                                        <input class="form-control " name="positionEdit" value="<?php echo $result_deptStaff['user_position']; ?>"  placeholder="Position">
                                                     </div>
-                                                    <div class="col-sm-3">
-                                                    <label>Speed Dial</label>
-                                                    <input class="form-control" placeholder="Speed Dial" name="dialEdit" value="<?php echo $result_showData['Staff_SpeedDial']; ?>" required autofocus="autofocus" />
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                    <label>Email</label>
-                                                    <input class="form-control" placeholder="Email" name="emailEdit" value="<?php echo $result_showData['Staff_Email']; ?>" required autofocus="autofocus" />
-                                                    </div>
+                                                    <div class="col">
+                                                        <label class="form-label">Phone</label>
+                                                        <input class="form-control" placeholder="phoneEdit" name="phoneEdit" value="<?php echo $result_deptStaff['user_phone']; ?>" required autofocus="autofocus" />
+                                                    </div> 
                                                 </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-3 pt-4">
+                                                        <input class="form-check-input" name="isActiveEdit" type="checkbox" value="yes" <?php if($result_deptStaff['user_isactive']=='yes'){echo 'checked';} ?>>
+                                                        <label class="form-check-label" for="flexCheckChecked">
+                                                            isActive
+                                                        </label>
+                                                    </div>
                                                 </div>
                                                 
                                                 <div class="modal-footer">
-                                                <input type="hidden" value="<?php echo $phone_id?>" name="idEdit" />
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" name="editProduct" class="btn btn-primary">Save</button>
+                                                    <input type="hidden" value="<?php echo $staff_id;?>" name="idEditHidden" />
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" name="editStaff" class="btn btn-primary">Save</button>
                                                 </form>
                                                 </div>   
                                             </div>
                                         </div>
                                     </div>
 
-
-
-                                
                             </li>
                             
                             <?php
@@ -247,6 +342,7 @@
     if(isset($_POST['addStaff'])){
         $Staff_Name = $_POST['Staff_Name'];
         $Staff_Id = $_POST['Staff_Id'];
+        $Staff_Type = $_POST['Staff_Type'];
         $fk_services = $_POST['fk_services'];
         $Staff_Position = $_POST['Staff_Position'];
         $Staff_Phone = $_POST['Staff_Phone'];
@@ -259,8 +355,8 @@
         // $todayDate = date('d/m/Y');
         // $todayTime = date('h:i a');
 
-        $query_addStaff = mysqli_query($con, "INSERT INTO user(user_fname, user_staffid, user_phone, user_position, user_dateregister, user_isactive, fk_services_id) 
-        VALUES ('$Staff_Name','$Staff_Id','$Staff_Phone','$Staff_Position','$Staff_Register','$isActive','$fk_services')");
+        $query_addStaff = mysqli_query($con, "INSERT INTO user(user_fname, user_staffid, user_phone, user_position,user_type, user_dateregister, user_isactive, fk_services_id) 
+        VALUES ('$Staff_Name','$Staff_Id','$Staff_Phone','$Staff_Position','$Staff_Type','$Staff_Register','$isActive','$fk_services')");
 
         $_SESSION['message'] = 'Successfully update information';   
         echo '<script>window.location.href="Staff_Add.php?msg=success"</script>';
@@ -290,6 +386,54 @@
         $query_deleteStaff = mysqli_query($con, "DELETE FROM user WHERE user_id = '$idDelete'");
         $_SESSION['message'] = 'Successfully delete information';   
         echo '<script>window.location.href="Staff_Add.php?msg=success"</script>';
+
+    }
+
+    //edit staff
+    if(isset($_POST['editStaff'])){
+        $idEditHidden = $_POST['idEditHidden'];
+
+        $nameEdit = $_POST['nameEdit'];
+        $idEdit = $_POST['idEdit'];
+        $typeEdit = $_POST['typeEdit'];
+        $servicesEdit = $_POST['servicesEdit'];
+        $positionEdit = $_POST['positionEdit'];
+        $phoneEdit = $_POST['phoneEdit'];
+        $isActiveEdit = $_POST['isActiveEdit'];
+
+
+        // $query_update = mysqli_query($con,"UPDATE staff SET Staff_FName='$nameEdit',Staff_Designation='$designationEdit',Staff_Ext='$extEdit',Staff_SpeedDial='$dialEdit',
+        // Staff_Email='$emailEdit' WHERE Staff_ID='$idEdit'");
+
+        $query_update = mysqli_query($con,"UPDATE user SET user_fname='$nameEdit',user_staffid='$idEdit',user_phone='$phoneEdit',user_position='$positionEdit',
+        user_type='$typeEdit',user_isactive='$isActiveEdit',fk_services_id='$servicesEdit' WHERE user_id='$idEditHidden'");
+
+        $_SESSION['message'] = 'Successfully update information';   
+        echo '<script>window.location.href="Staff_Add.php?msg=success"</script>';
+
+    }
+
+    //add Car
+    if(isset($_POST['addCar'])){
+        $idAddCarHidden = $_POST['idAddCarHidden'];
+        $car_brand = $_POST['car_brand'];
+        $car_model = $_POST['car_model'];
+        $car_platenum = $_POST['car_platenum'];
+        $car_color = $_POST['car_color'];
+
+        $check_name = mysqli_query($con,"SELECT * FROM car_record WHERE car_platenum= '$car_platenum'");
+        $result_name = mysqli_fetch_array($check_name);
+        if($result_name>0){
+            $_SESSION['message'] = 'Duplicated Car, Please add other car';   
+        }else{
+            //If username not exist insert into 'login' db
+            $query_update = mysqli_query($con,"INSERT INTO car_record(car_platenum, car_model, car_brand, car_color, fk_staff_id) 
+            VALUES ('$car_platenum','$car_model','$car_brand','$car_color','$idAddCarHidden')");
+            $_SESSION['message'] = 'Successfully update information';   
+            echo '<script>window.location.href="Staff_Add.php?msg=success"</script>';
+            //$_SESSION['message'] = 'Successfully update information';   
+            //echo '<script>window.location.href="User_Add.php?msg=success"</script>';   
+        }
 
     }
 ?>
