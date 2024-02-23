@@ -199,7 +199,30 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                             <div class="modal-body">
-                                                
+                                            <div class="overflow-auto p-3" style="max-width: auto; max-height: 600px;">
+                                                <ol class="list-group list-group-numbered">
+                                                    <?php
+                                                        $query_deptStaff = mysqli_query($con,"SELECT * FROM car_record WHERE fk_staff_id = '$staff_id' ");
+                                                        while($result_deptStaff = mysqli_fetch_array($query_deptStaff)){
+                                                        $car_brand = $result_deptStaff['car_brand'];
+                                                        $car_model = $result_deptStaff['car_model'];
+                                                        $car_color = $result_deptStaff['car_color'];
+                                                        $car_platenum = $result_deptStaff['car_platenum'];
+                                                        
+                                                    ?>
+                                                    <li class="list-group-item d-flex align-items-start">
+                                                        <div class="ms-2 me-auto">
+                                                            <div class="fw-bold">
+                                                                <?php echo $car_brand; ?> 
+                                                                [<?php  echo $car_model; ?>]
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                </ol>
+                                            </div>
                                             </div> 
                                             <div class="modal-footer">
                                                     <input type="hidden" value="<?php echo $staff_id;?>" name="idAddCarHidden" />
