@@ -111,7 +111,7 @@
                                     <div class="fw-bold">
                                         <?php echo $result_deptStaff['user_fname']; ?> 
                                         [<?php  echo $result_deptStaff['user_staffid']; ?>]
-                                        <button type="button" class="btn-sm <?php if($reqcount==0){echo 'btn-warning';}else{echo 'btn-info';} ?> position-relative rounded-circle">
+                                        <button type="button" class="btn-sm <?php if($reqcount==0){echo 'btn-warning';}else{echo 'btn-info';} ?> position-relative rounded-circle"  data-bs-toggle="modal" data-bs-target="#viewCar<?php echo $staff_id ?>">
                                             <i class="bi bi-truck"></i>
                                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                                 <?php echo $reqcount; ?>
@@ -147,7 +147,7 @@
 
                                 <!-- Add Car Modal -->
                                 <!-- Edit Modal -->
-                                    <div class="modal fade" id="addCar<?php echo $staff_id?>" tabindex="-1" aria-labelledby="editModalLabel" class="modal fade" role="dialog">
+                                    <!-- <div class="modal fade" id="addCar<?php echo $staff_id?>" tabindex="-1" aria-labelledby="editModalLabel" class="modal fade" role="dialog">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                             <div class="modal-header">
@@ -188,9 +188,73 @@
                                                 </div>   
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
-                                
+                                <!-- View -->
+                                <div class="modal fade" id="viewCar<?php echo $staff_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel">Add Car to : <strong><?php echo $staff_name?></strong> ?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                            <div class="modal-body">
+                                                
+                                            </div> 
+                                            <div class="modal-footer">
+                                                    <input type="hidden" value="<?php echo $staff_id;?>" name="idAddCarHidden" />
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" name="addCar" class="btn btn-primary">Save</button>
+                                            </div>   
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Add Car Modal -->
+                                <div class="modal fade" id="addCar<?php echo $staff_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel">Add Car to : <strong><?php echo $staff_name?></strong> ?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                            <form method="post">
+                                            <div class="modal-body">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                    <label>Car Brand</label>
+                                                        <input class="form-control" placeholder="Enter Car Brand" name="car_brand" required autofocus="autofocus" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                    <label>Car Model</label>
+                                                        <input class="form-control" placeholder="Enter Model" name="car_model" required autofocus="autofocus" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                    <label>Plate Number</label>
+                                                        <input class="form-control" placeholder="Plate Number" name="car_platenum"  required autofocus="autofocus" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                    <label>Car Color</label>
+                                                        <input class="form-control" placeholder="Car Color" name="car_color" required autofocus="autofocus" />
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="modal-footer">
+                                                    <input type="hidden" value="<?php echo $staff_id;?>" name="idAddCarHidden" />
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" name="addCar" class="btn btn-primary">Save</button>
+                                            </form>
+                                            </div>   
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- Delete Modal -->
                                 <div class="modal fade" id="delete<?php echo $staff_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
