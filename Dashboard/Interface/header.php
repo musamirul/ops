@@ -34,7 +34,8 @@
                     <a href="#ConsultantCollapse" aria-current="true" aria-controls="ConsultantCollapse" data-bs-toggle="collapse" aria-expanded="true" class="list-group-item list-group-item-action py-2"><i class="bi bi-person-square me-3"></i><span>Staff Management</span></a>
                     <ul class="collapse list-group list-group-flush ps-4" id="ConsultantCollapse">
                       <li class="list-group-item py-1 "><a href="Staff_Add.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-person-plus"></i><span> Add Staff</span></a></li>
-                      <li class="list-group-item py-1 "><a href="Doctor_Hosp_Add.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-building"></i><span> Add Services</span></a></li>
+                      <li class="list-group-item py-1 "><a href="Staff_Health.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-building"></i><span> Add Health</span></a></li>
+                      <li class="list-group-item py-1 "><a href="Card_Add.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-building"></i><span> Add Card</span></a></li>
                     </ul>               
                     
                    

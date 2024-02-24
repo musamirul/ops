@@ -1,3 +1,4 @@
+(DONE)
 USER
 -full name
 -staff_id
@@ -21,6 +22,7 @@ Health_record
 -fk_card_id
 -fk_staff_id
 
+(DONE)
 Car_record
 -plate_number
 -car_model
@@ -28,9 +30,11 @@ Car_record
 -car_color
 -fk_staff_id
 
+(DONE)
 Services
 -services_name
 
+(DONE)
 Employee_type
 -type_list
 	- staff
@@ -39,6 +43,7 @@ Employee_type
 	- visiting
 	- outsource
 
+(DONE)
 Card
 -serialnumber
 -numbercard
