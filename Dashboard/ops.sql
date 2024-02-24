@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2024 at 05:05 AM
+-- Generation Time: Feb 24, 2024 at 10:26 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `card` (
   `card_dateregister` varchar(50) NOT NULL,
   `card_isactive` varchar(50) NOT NULL,
   `card_isuse` varchar(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `card`
@@ -41,7 +41,10 @@ CREATE TABLE IF NOT EXISTS `card` (
 INSERT INTO `card` (`card_id`, `card_serialnum`, `card_dateregister`, `card_isactive`, `card_isuse`) VALUES
 (2, 'A543847465', '2024-02-22', 'no', 'yes'),
 (4, 'A543847463', '2024-02-17', 'no', 'yes'),
-(5, 'A543847469', '2024-02-16', 'yes', 'no');
+(5, 'A543847469', '2024-02-16', 'yes', 'no'),
+(6, 'A27383A36', '2024-12-31', 'yes', 'no'),
+(7, 'A27383A36', '2024-12-01', 'no', 'yes'),
+(8, 'A27383A36', '2024-12-31', 'yes', 'yes');
 
 -- --------------------------------------------------------
 
@@ -56,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `car_record` (
   `car_brand` varchar(50) NOT NULL,
   `car_color` varchar(50) NOT NULL,
   `fk_staff_id` int(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `car_record`
@@ -68,7 +71,8 @@ INSERT INTO `car_record` (`car_id`, `car_platenum`, `car_model`, `car_brand`, `c
 (3, 'vad12351', 'saga', 'proton', 'blue', 14),
 (4, 'sdfsf', 'tt', 'h', 'red', 16),
 (5, '23asdf', 'saga', 'proton', 'blue', 17),
-(6, 'vdfd234', 'saga', 'honda', 'yellow', 10);
+(6, 'vdfd234', 'saga', 'honda', 'yellow', 10),
+(7, 'vap 295', 'Kancil', 'PERODUA ', 'hitam setan', 19);
 
 -- --------------------------------------------------------
 
@@ -103,8 +107,20 @@ CREATE TABLE IF NOT EXISTS `health_record` (
   `health_type` varchar(100) NOT NULL,
   `health_startdate` varchar(100) NOT NULL,
   `health_period` int(100) NOT NULL,
+  `health_iscardreturn` varchar(50) NOT NULL,
+  `health_datecardreturn` varchar(50) NOT NULL,
+  `health_remark` varchar(100) NOT NULL,
+  `health_recorddate` varchar(100) NOT NULL,
+  `fk_card_id` int(50) NOT NULL,
   `fk_staff_id` int(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `health_record`
+--
+
+INSERT INTO `health_record` (`health_id`, `health_type`, `health_startdate`, `health_period`, `health_iscardreturn`, `health_datecardreturn`, `health_remark`, `health_recorddate`, `fk_card_id`, `fk_staff_id`) VALUES
+(1, 'illness', '2024-12-31', 1, '', '', 're', '24/02/2024', 6, 11);
 
 -- --------------------------------------------------------
 
@@ -115,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `health_record` (
 CREATE TABLE IF NOT EXISTS `services` (
 `services_id` int(11) NOT NULL,
   `services_name` varchar(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `services`
@@ -123,7 +139,8 @@ CREATE TABLE IF NOT EXISTS `services` (
 
 INSERT INTO `services` (`services_id`, `services_name`) VALUES
 (2, 'Finance'),
-(3, 'Information Technology');
+(3, 'Information Technology'),
+(4, 'Nursing');
 
 -- --------------------------------------------------------
 
@@ -141,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_dateregister` varchar(150) NOT NULL,
   `user_isactive` varchar(50) NOT NULL,
   `fk_services_id` int(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `user`
@@ -155,7 +172,8 @@ INSERT INTO `user` (`user_id`, `user_fname`, `user_staffid`, `user_phone`, `user
 (15, 'test', '21512', '', 'position', '2', '', 'yes', 3),
 (16, 'test', '202348', '51542', 'position', '3', '2024-02-23', 'yes', 3),
 (17, 'test', '202348', 'y', 'officer', '2', '2024-02-22', 'yes', 3),
-(18, 'mustaqim', '2016670', '0193071722', 'officer', '2', '2024-10-31', 'yes', 3);
+(18, 'mustaqim', '2016670', '0193071722', 'officer', '2', '2024-10-31', 'yes', 3),
+(19, 'SR MARYANI', '585282', '01233373737', 'Unit Manager', '2', '2024-12-31', 'yes', 4);
 
 --
 -- Indexes for dumped tables
@@ -205,12 +223,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `card`
 --
 ALTER TABLE `card`
-MODIFY `card_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `card_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `car_record`
 --
 ALTER TABLE `car_record`
-MODIFY `car_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `car_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `employee_type`
 --
@@ -220,17 +238,17 @@ MODIFY `emptype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 -- AUTO_INCREMENT for table `health_record`
 --
 ALTER TABLE `health_record`
-MODIFY `health_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `health_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-MODIFY `services_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `services_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
