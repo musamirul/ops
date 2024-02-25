@@ -9,6 +9,7 @@ USER
 -date_register
 -status
 
+(DONE)
 Health_record
 -healthType
 	-pregnantLeave
@@ -50,6 +51,7 @@ Card
 -dateregisterd
 -iscardinuse
 -isactive
+
 ______________________________
 Parking Internal
 -fk_user_id
