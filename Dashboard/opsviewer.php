@@ -39,7 +39,7 @@
         <div class="row text-white pt-2 pb-2">
             <form method="post">
                 <div class="input-group mt-1">
-                <input style="background-color: white;color: black;" class="form-control" type="text" name="nameSearch" placeholder="Search Staff Name">
+                <input style="background-color: white;color: black;" class="form-control" type="text" name="nameSearch" placeholder="Search Staff Name / Plate Number">
                 <button class="btn btn-primary btn-sm" name="searchButton" type="submit"><i class="bi bi-search ps-3 pe-3 me-3"></i></button>
                 </div>
             </form>
@@ -52,6 +52,22 @@
                         $nameSearch = $_POST['nameSearch'];
                         
                         if($nameSearch!=''){
+
+                          if (preg_match('~[0-9]+~', $nameSearch)) {
+                            $searchPlate = mysqli_query($con,"SELECT * FROM car_record WHERE car_platenum LIKE '%$nameSearch%'");
+                            $queryPlate = mysqli_fetch_array($searchPlate);
+                            $Plate_num = $queryPlate['car_platenum'];
+                            $Plate_staffId= $queryPlate['fk_staff_id'];
+                            
+
+                            $searchQuery = mysqli_query($con,"SELECT * FROM user
+                            WHERE user_id ='$Plate_staffId'");
+                            $resultQuery = mysqli_fetch_array($searchQuery);
+                            $nameSearch = $resultQuery['user_fname'];
+                          }
+                        
+
+
                         $searchQuery = mysqli_query($con,"SELECT * FROM user
                         WHERE user_fname LIKE '%$nameSearch%' OR user_staffid LIKE '%$nameSearch%'");
                         
@@ -73,45 +89,38 @@
 
                         $query_emptype = mysqli_query($con,"SELECT * FROM employee_type WHERE emptype_id = '$user_type'");
                         $result_emptype = mysqli_fetch_array($query_emptype);
-                        $emptype_name = $result_emptype['emptype_name'];
-
-                        
-                        
-                    
+                        $emptype_name = $result_emptype['emptype_name'];                    
                
             ?>
-            <div class="card text-center mb-3">
-                <div class="card-header">
-                    <h5><?php echo $user_fname.' ['.$user_id.']'; ?><?php if($user_isactive=='no'){echo '- <span style="color:red">INACTIVE</span>'.' ';} ?></h5>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-center">
-                    <?php
-                            $query_countreq = mysqli_query($con,"SELECT * FROM car_record WHERE fk_staff_id = '$user_id'");
-                            while($result_countreq = mysqli_fetch_array($query_countreq)){
-                        ?>
-                            <div class="card bg-primary mb-2 me-2" style="max-width: 18rem;">
-                                <div class="card-header text-white"><b><?php echo $result_countreq['car_platenum'] ?></b></div>
-                                <div class="card-body">
-                                    <p class="card-title text-white"><?php echo $result_countreq['car_brand'].' '.$result_countreq['car_model'].' ['.$result_countreq['car_color'].']'; ?></p>
-                                </div>
-                            </div>
-                        <?php
-                            }
-                        ?>
-                    </div>
-                    <div class="card-text">
-                        <div class="d-flex justify-content-center">
-                            <div class="bd-highlight"><span style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 12px;">Phone : </span><span style="color: rgb(80, 80, 80); font-weight: 500; font-size: 14px;"> <?php echo $user_phone; ?></span></div>
-                            <div class="ps-2 bd-highlight">| <span style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 12px;">Date Register : </span><span style="color: rgb(80, 80, 80); font-weight: 500; font-size: 14px;"><?php echo $user_dateregister; ?></span></div>
-                            <div class="ps-2 bd-highlight">| <span style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 12px;">Employee Type : </span><span style="color: rgb(80, 80, 80); font-weight: 500; font-size: 14px;"><?php echo $emptype_name; ?></span></div>
-                        </div>
+            <div class="shadow-lg bg-light rounded mb-3 pt-2">
+              <div class="d-flex flex-row">
+                <div class="p-2">
+                  <span style="font-size: 25px; font-weight: 600;"><?php echo $user_fname.' ['.$user_staffid.']'; ?><?php if($user_isactive=='no'){echo '- <span style="color:red">INACTIVE</span>'.' ';} ?></span><br/>
+                  <span style="font-size: 15px; font-weight: 400;"><?php echo $services_name; ?> (<?php echo $user_position; ?>)</span><br/>
+                  <div class="d-flex flex-row bd-highlight mb-3">
+                        <div class="bd-highlight"><span style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 12px;">Phone : </span><span style="color: rgb(80, 80, 80); font-weight: 500; font-size: 14px;"> <?php echo $user_phone; ?></span></div>
+                        <div class="ps-2 bd-highlight">| <span style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 12px;">Date Register : </span><span style="color: rgb(80, 80, 80); font-weight: 500; font-size: 14px;"><?php echo $user_dateregister; ?></span></div>
+                        <div class="ps-2 bd-highlight">| <span style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 12px;">Employee Type : </span><span style="color: rgb(80, 80, 80); font-weight: 500; font-size: 14px;"><?php echo $emptype_name; ?></span></div>
                     </div>
                 </div>
-                <div class="card-footer text-body-secondary">
-                    Date Register : <?php echo $user_dateregister; ?>
+                <div class="p-2">
+                  <div class="d-flex flex-row">
+                      <?php
+                          $query_countreq = mysqli_query($con,"SELECT * FROM car_record WHERE fk_staff_id = '$user_id'");
+                          while($result_countreq = mysqli_fetch_array($query_countreq)){
+                      ?>
+                          <div class="card bg-primary me-2" style="max-width: 18rem;">
+                              <div class="card-header text-white"><b><?php echo $result_countreq['car_platenum'] ?></b></div>
+                              <div class="card-body">
+                                  <p class="card-title text-white"><?php echo $result_countreq['car_brand'].' '.$result_countreq['car_model'].' ['.$result_countreq['car_color'].']'; ?></p>
+                              </div>
+                          </div>
+                      <?php
+                          }
+                      ?>
+                  </div>
                 </div>
-            </div>
+              </div>
             <?php
                         }
                 }

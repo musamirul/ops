@@ -53,10 +53,29 @@ Card
 -isactive
 
 ______________________________
+Health_record
+-healthType
+	-pregnantLeave
+	-ChronicIllness
+-startDate_Health
+-period_Health
+-remarks
+-datecreation
+-fk_staff_id
+
 Parking Internal
+-parking_id
 -fk_user_id
--no_access_card
--serial_num
--lot parking
--isStatus
-	-reserved
+-fk_access_card
+-fk_parking_lot
+-parking_iscardreturn
+-parking_datecardreturn
+-parking_duration
+
+DONE
+Parking Lot
+lot_number
+lot_delegation
+lot_isactive
+lot_isreserve
+

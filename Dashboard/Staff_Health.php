@@ -93,23 +93,29 @@
                             <div class="ps-2 bd-highlight">| <span style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 12px;">Employee Type </span><span style="color: rgb(80, 80, 80); font-weight: 500; font-size: 14px;"><?php echo $emptype_name; ?></span></div>
                         </div>
                     </p>
-                    <button type="submit"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addHealth<?php echo $user_id ?>">Add Health Record</button>
                 </div>
             </div>
             <?php } ?>
         </div>
+        <div class="row">
+            <center>
+            <div class="btn-group mt-2 shadow" style="width:500px">
+                <a href="Staff_Health.php" class="btn btn-primary active" aria-current="page">Health Record</a>
+                <a href="Staff_Parking.php" class="btn btn-primary">Parking Record</a>
+                <a href="#" class="btn btn-primary">Profile</a>
+            </div>
+            </center>
+        </div>
         <span class="d-grid mx-auto mt-3 mb-3" style="border-bottom:0.5px solid rgb(210, 240, 240);"></span>
         <div class="row pt-2">
-            <div style="background-color: rgb(210, 250, 250); " class="col">
+            <div style="background-color: rgb(210, 250, 250); " class="col shadow pt-3 rounded-4">
+            <button type="submit" style="width:150px"  class="btn btn-primary btn-sm mb-2" data-bs-toggle="modal" data-bs-target="#addHealth<?php echo $user_id ?>">Add Health Record</button>
                 <table class="table">
                     <thead class="table-dark">
                       <tr>
                         <th>Start Date</th>
                         <th>Period</th>
                         <th>Illness Type</th>
-                        <th>Card Num</th>
-                        <th>Card IsReturn</th>
-                        <th>Card DateReturn</th>
                         <th>Remark</th>
                         <th>Action</th>
                       </tr>
@@ -129,9 +135,6 @@
                             <th><?php echo $result_health['health_startdate']; ?></th>
                             <th><?php echo $result_health['health_period']; ?></th>
                             <th><?php echo $result_health['health_type']; ?></th>
-                            <th><?php echo $card_serialnum; ?></th>
-                            <th><?php echo $result_health['health_iscardreturn']; ?></th>
-                            <th><?php echo $result_health['health_datecardreturn']; ?></th>
                             <th><?php echo $result_health['health_remark']; ?></th>
                             <th>
                                 <?php if($result_health['health_iscardreturn']=='yes'){ ?>
@@ -173,53 +176,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <!-- Receive Card Modal -->
-                                <div class="modal fade" id="receiveCard<?php echo $health_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel">Illness Date <?php echo $result_health['health_startdate'];?></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                        <div class="modal-body">
-                                            Do user return card? <strong><?php echo $card_serialnum ?></strong>      
-                                        </div> 
-                                        <div class="modal-footer">
-                                        <form method="post">
-                                            <input type="hidden" value="<?php echo $card_serialnum; ?>" name="card_serialnum" />
-                                            <input type="hidden" value="<?php echo $health_id; ?>" name="health_id" />
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" name="receiveCard" class="btn btn-danger">Receive</button>
-                                        </form>
-                                        </div>   
-                                    </div>
-                                </div>
-                                </div>
-                                <!-- End Receive Card Modal-->
-                                <!-- Return Card Modal -->
-                                <div class="modal fade" id="returnCard<?php echo $health_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel">Illness Date <?php echo $result_health['health_startdate'];?></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                        <div class="modal-body">
-                                            Do you want to return card to user? <strong><?php echo $card_serialnum ?></strong>      
-                                        </div> 
-                                        <div class="modal-footer">
-                                        <form method="post">
-                                            <input type="hidden" value="<?php echo $card_serialnum; ?>" name="card_serialnum" />
-                                            <input type="hidden" value="<?php echo $health_id; ?>" name="health_id" />
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" name="returnCard" class="btn btn-danger">Return</button>
-                                        </form>
-                                        </div>   
-                                    </div>
-                                </div>
-                                </div>
-                                <!-- End Return Card Modal-->
                             </th>
                         </tr>
                         <?php
@@ -264,24 +220,6 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-12">
-                    <label>Select Card</label>
-                        <select name="card_id" class="form-select ">
-                                <?php
-                                    $query_empShow = mysqli_query($con,"SELECT * FROM card WHERE card_isactive='yes' AND card_isuse='no' ORDER BY card_id");
-                                    while($result_empShow = mysqli_fetch_array($query_empShow)){
-                                ?>
-                                    <option value="<?php echo $result_empShow['card_id']; ?>">
-                                        <?php echo $result_empShow['card_serialnum']; ?>
-                                        <?php if($result_empShow['card_isuse']=='yes'){echo ' NOT AVAILABLE';}else{echo 'AVAILABLE';}?>
-                                    </option>
-                                <?php
-                                    }
-                                ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-12">
                     <label>Remark</label>
                         <input class="form-control" placeholder="Enter Remark" name="health_remark" required autofocus="autofocus" />
                     </div>
@@ -318,57 +256,19 @@
         echo '<script>window.location.href="Staff_Health.php?msg=success"</script>';
 
     }
-
-    if(isset($_POST['receiveCard'])){
-        $card_serialnum = $_POST['card_serialnum'];
-        $health_id = $_POST['health_id'];
-
-        date_default_timezone_set("Asia/Kuala_Lumpur");
-        $todayDate = date('d/m/Y h:i:s a', time());
-        // $todayTime = date('h:i a');
-
-        $query_updateHealth = mysqli_query($con, "UPDATE health_record SET health_iscardreturn='yes',health_datecardreturn='$todayDate' WHERE health_id='$health_id'");
-
-        $query_updateCard = mysqli_query($con,"UPDATE card SET card_isuse='no' WHERE card_serialnum='$card_serialnum'");
-
-        $_SESSION['message'] = 'Successfully update information';
-
-        echo '<script>window.location.href="Staff_Health.php?msg=success"</script>';
-
-    }
-    if(isset($_POST['returnCard'])){
-        $card_serialnum = $_POST['card_serialnum'];
-        $health_id = $_POST['health_id'];
-
-        date_default_timezone_set("Asia/Kuala_Lumpur");
-        $todayDate = date('d/m/Y h:i:s a', time());
-        // $todayTime = date('h:i a');
-
-        $query_updateHealth = mysqli_query($con, "UPDATE health_record SET health_iscardreturn='no',health_datecardreturn='' WHERE health_id='$health_id'");
-
-        $query_updateCard = mysqli_query($con,"UPDATE card SET card_isuse='yes' WHERE card_serialnum='$card_serialnum'");
-
-        $_SESSION['message'] = 'Successfully update information';
-
-        echo '<script>window.location.href="Staff_Health.php?msg=success"</script>';
-
-    }
     if(isset($_POST['addHealth'])){
         $user_id = $_POST['user_id'];
         $health_type = $_POST['health_type'];
         $health_startdate = $_POST['health_startdate'];
         $health_period = $_POST['health_period'];
         $health_remark = $_POST['health_remark'];
-        $card_id = $_POST['card_id'];
 
         date_default_timezone_set("Asia/Kuala_Lumpur");
         $todayDate = date('d/m/Y');
         // $todayTime = date('h:i a');
 
-        $query_addHealth = mysqli_query($con, "INSERT INTO health_record(health_type, health_startdate, health_period, health_iscardreturn, health_datecardreturn, health_remark, health_recorddate, fk_card_id, fk_staff_id)
-         VALUES ('$health_type','$health_startdate','$health_period','no','','$health_remark','$todayDate','$card_id','$user_id')");
-
-        $query_updateCard = mysqli_query($con,"UPDATE card SET card_isuse='yes' WHERE card_id='$card_id'");
+        $query_addHealth = mysqli_query($con, "INSERT INTO health_record(health_type, health_startdate, health_period, health_remark, health_recorddate, fk_staff_id)
+         VALUES ('$health_type','$health_startdate','$health_period','$health_remark','$todayDate','$user_id')");
 
         $_SESSION['message'] = 'Successfully update information';
 
@@ -376,79 +276,5 @@
 
     }
 
-    if(isset($_POST['saveServices'])){
-        $services_name = $_POST['services_name'];
-        $check_name = mysqli_query($con,"SELECT * FROM services WHERE services_name = '$services_name'");
-        $result_name = mysqli_fetch_array($check_name);
-        if($result_name>0){
-            $_SESSION['message'] = 'Duplicated Services, Please add other services';   
-        }else{
-            //If username not exist insert into 'login' db
-            $query_update = mysqli_query($con,"INSERT INTO services(services_name) VALUES ('$services_name')");
-            $_SESSION['message'] = 'Successfully update information';   
-            echo '<script>window.location.href="Staff_Add.php?msg=success"</script>';
-            //$_SESSION['message'] = 'Successfully update information';   
-            //echo '<script>window.location.href="User_Add.php?msg=success"</script>';   
-        }
-
-    }
-
-    if(isset($_POST['deleteStaff'])){
-        $idDelete = $_POST['idDelete'];
-
-        $query_deleteStaff = mysqli_query($con, "DELETE FROM user WHERE user_id = '$idDelete'");
-        $_SESSION['message'] = 'Successfully delete information';   
-        echo '<script>window.location.href="Staff_Add.php?msg=success"</script>';
-
-    }
-
-    //edit staff
-    if(isset($_POST['editStaff'])){
-        $idEditHidden = $_POST['idEditHidden'];
-
-        $nameEdit = $_POST['nameEdit'];
-        $idEdit = $_POST['idEdit'];
-        $typeEdit = $_POST['typeEdit'];
-        $servicesEdit = $_POST['servicesEdit'];
-        $positionEdit = $_POST['positionEdit'];
-        $phoneEdit = $_POST['phoneEdit'];
-        $isActiveEdit = $_POST['isActiveEdit'];
-
-
-        // $query_update = mysqli_query($con,"UPDATE staff SET Staff_FName='$nameEdit',Staff_Designation='$designationEdit',Staff_Ext='$extEdit',Staff_SpeedDial='$dialEdit',
-        // Staff_Email='$emailEdit' WHERE Staff_ID='$idEdit'");
-
-        $query_update = mysqli_query($con,"UPDATE user SET user_fname='$nameEdit',user_staffid='$idEdit',user_phone='$phoneEdit',user_position='$positionEdit',
-        user_type='$typeEdit',user_isactive='$isActiveEdit',fk_services_id='$servicesEdit' WHERE user_id='$idEditHidden'");
-
-        $_SESSION['message'] = 'Successfully update information';
-           
-        echo '<script>window.location.href="Staff_Add.php?msg=success"</script>';
-
-    }
-
-    //add Car
-    if(isset($_POST['addCar'])){
-        $idAddCarHidden = $_POST['idAddCarHidden'];
-        $car_brand = $_POST['car_brand'];
-        $car_model = $_POST['car_model'];
-        $car_platenum = $_POST['car_platenum'];
-        $car_color = $_POST['car_color'];
-
-        $check_name = mysqli_query($con,"SELECT * FROM car_record WHERE car_platenum= '$car_platenum'");
-        $result_name = mysqli_fetch_array($check_name);
-        if($result_name>0){
-            $_SESSION['message'] = 'Duplicated Car, Please add other car';   
-        }else{
-            //If username not exist insert into 'login' db
-            $query_update = mysqli_query($con,"INSERT INTO car_record(car_platenum, car_model, car_brand, car_color, fk_staff_id) 
-            VALUES ('$car_platenum','$car_model','$car_brand','$car_color','$idAddCarHidden')");
-            $_SESSION['message'] = 'Successfully update information';   
-            echo '<script>window.location.href="Staff_Add.php?msg=success"</script>';
-            //$_SESSION['message'] = 'Successfully update information';   
-            //echo '<script>window.location.href="User_Add.php?msg=success"</script>';   
-        }
-
-    }
 ?>
 <?php include("Interface/footer.php"); ?>
