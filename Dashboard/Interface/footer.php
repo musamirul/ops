@@ -122,7 +122,26 @@ if (toastTrigger) {
 
 
 
+<script type="text/javascript">
+  $(function() {
 
+    $('input[class="filterdate form-control"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+
+    $('input[class="filterdate form-control"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+    });
+
+    $('input[class="filterdate form-control"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+    });
+
+  });
+</script>
 
   </body>
 </html>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2024 at 01:45 PM
+-- Generation Time: Feb 26, 2024 at 05:41 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -41,10 +41,8 @@ CREATE TABLE IF NOT EXISTS `card` (
 INSERT INTO `card` (`card_id`, `card_serialnum`, `card_dateregister`, `card_isactive`, `card_isuse`) VALUES
 (2, 'A543847465', '2024-02-22', 'no', 'no'),
 (4, 'A543847463', '2024-02-17', 'no', 'no'),
-(5, 'A543847469', '2024-02-16', 'yes', 'yes'),
-(6, 'A27383A36', '2024-12-31', 'yes', 'no'),
-(7, 'A27383A36', '2024-12-01', 'no', 'no'),
-(8, 'A27383A36', '2024-12-31', 'yes', 'no');
+(5, 'A543847469', '2024-02-16', 'yes', 'no'),
+(6, 'A27383A36', '2024-12-31', 'yes', 'no');
 
 -- --------------------------------------------------------
 
@@ -59,17 +57,17 @@ CREATE TABLE IF NOT EXISTS `car_record` (
   `car_brand` varchar(50) NOT NULL,
   `car_color` varchar(50) NOT NULL,
   `fk_staff_id` int(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `car_record`
 --
 
 INSERT INTO `car_record` (`car_id`, `car_platenum`, `car_model`, `car_brand`, `car_color`, `fk_staff_id`) VALUES
-(12, 'VJJ4898', 'Myvi', 'Perodua', 'Black', 23),
-(13, 'VAJ1456', 'BEZZA', 'PERODUA ', 'Black', 23),
-(14, 'VAP295', 'AXIA', 'PERODUA ', 'SILVER', 24),
-(15, 'WHD538', 'SATRIA', 'PROTON', 'BLUE', 24);
+(20, 'VJJ1234', 'saga', 'honda', 'BLUE', 27),
+(21, 'BKF1234', 'Myvi', 'Perodua', 'Pink', 27),
+(22, 'vad12351', 'city', 'honda', 'red', 28),
+(23, 'vap1241', 'Myvi', 'honda', 'red', 29);
 
 -- --------------------------------------------------------
 
@@ -103,20 +101,17 @@ CREATE TABLE IF NOT EXISTS `health_record` (
 `health_id` int(11) NOT NULL,
   `health_type` varchar(100) NOT NULL,
   `health_startdate` varchar(100) NOT NULL,
-  `health_period` int(100) NOT NULL,
   `health_remark` varchar(100) NOT NULL,
   `health_recorddate` varchar(100) NOT NULL,
   `fk_staff_id` int(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `health_record`
 --
 
-INSERT INTO `health_record` (`health_id`, `health_type`, `health_startdate`, `health_period`, `health_remark`, `health_recorddate`, `fk_staff_id`) VALUES
-(9, 'fever', '2024-02-25', 2, 'long fever 2', '25/02/2024', 23),
-(10, 'illness', '2024-12-31', 5, 'health remark', '26/02/2024', 23),
-(11, 'PREGNANT', '2024-02-26', 6, 'END DATE', '26/02/2024', 24);
+INSERT INTO `health_record` (`health_id`, `health_type`, `health_startdate`, `health_remark`, `health_recorddate`, `fk_staff_id`) VALUES
+(15, 'FEVER', '26/02/2024 - 26/03/2024', 'high fever', '26/02/2024', 27);
 
 -- --------------------------------------------------------
 
@@ -130,9 +125,16 @@ CREATE TABLE IF NOT EXISTS `parking` (
   `fk_card_id` int(11) NOT NULL,
   `fk_lot_id` int(11) NOT NULL,
   `parking_iscardreturn` varchar(50) NOT NULL,
-  `parking_datecardreturn` varchar(50) NOT NULL,
-  `parking_duration` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `parking_datecardborrow` varchar(50) NOT NULL,
+  `parking_datecardreturn` varchar(50) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `parking`
+--
+
+INSERT INTO `parking` (`parking_id`, `fk_user_id`, `fk_card_id`, `fk_lot_id`, `parking_iscardreturn`, `parking_datecardborrow`, `parking_datecardreturn`) VALUES
+(3, 27, 5, 10, 'yes', '26/02/2024', '26/02/2024 10:55:28 pm');
 
 -- --------------------------------------------------------
 
@@ -146,14 +148,15 @@ CREATE TABLE IF NOT EXISTS `parking_lot` (
   `lot_delegation` varchar(100) NOT NULL,
   `lot_isactive` varchar(50) NOT NULL,
   `lot_isreserve` varchar(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `parking_lot`
 --
 
 INSERT INTO `parking_lot` (`lot_id`, `lot_number`, `lot_delegation`, `lot_isactive`, `lot_isreserve`) VALUES
-(3, '533', 'consultant', 'yes', 'no');
+(10, '522', 'staff', 'yes', 'yes'),
+(11, '524', 'management', 'yes', 'no');
 
 -- --------------------------------------------------------
 
@@ -191,15 +194,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_dateregister` varchar(150) NOT NULL,
   `user_isactive` varchar(50) NOT NULL,
   `fk_services_id` int(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`user_id`, `user_fname`, `user_staffid`, `user_phone`, `user_position`, `user_type`, `user_dateregister`, `user_isactive`, `fk_services_id`) VALUES
-(23, 'Ameirul Mustaqim', '2016670', '0193071722', 'IT', '2', '2024-12-31', 'yes', 3),
-(24, 'NORRAIRIN BINTI ABU BAKAR', '2015586', '0126321869', 'EXECUTIVE', '2', '2015-10-01', 'yes', 3);
+(27, 'Ameirul Mustaqim', '20122456', '0193071722', 'IT', '2', '2024-12-31', 'yes', 3),
+(28, 'Ali bin Abu', '202348', '01234567', 'Finance', '2', '2024-11-01', 'yes', 2),
+(29, 'anas bin talib', '2012245', '0123487415', 'Nurse', '2', '2024-12-31', 'yes', 4);
 
 --
 -- Indexes for dumped tables
@@ -266,7 +270,7 @@ MODIFY `card_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 -- AUTO_INCREMENT for table `car_record`
 --
 ALTER TABLE `car_record`
-MODIFY `car_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `car_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `employee_type`
 --
@@ -276,17 +280,17 @@ MODIFY `emptype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 -- AUTO_INCREMENT for table `health_record`
 --
 ALTER TABLE `health_record`
-MODIFY `health_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+MODIFY `health_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `parking`
 --
 ALTER TABLE `parking`
-MODIFY `parking_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `parking_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `parking_lot`
 --
 ALTER TABLE `parking_lot`
-MODIFY `lot_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `lot_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `services`
 --
@@ -296,7 +300,7 @@ MODIFY `services_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
+MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

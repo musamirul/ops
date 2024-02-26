@@ -28,19 +28,19 @@
   <!-- Sidebar -->
     	<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
         	<div class="position-sticky">
-            	<div class="list-group list-group-flush mx-3 mt-4">
+            	<div class="list-group list-group-flush mt-4">
                 	<a href="Admin_Dashboard.php" class="list-group-item list-group-item-action py-2" aria-current="true"><i class="bi bi-house-door-fill me-3"></i><span>Dashboard</span></a>
 
                     <a href="#ConsultantCollapse" aria-current="true" aria-controls="ConsultantCollapse" data-bs-toggle="collapse" aria-expanded="true" class="list-group-item list-group-item-action py-2"><i class="bi bi-person-square me-3"></i><span>Staff Management</span></a>
                     <ul class="collapse list-group list-group-flush ps-4" id="ConsultantCollapse">
                       <li class="list-group-item py-1 "><a href="Staff_Add.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-person-plus"></i><span> Add Staff</span></a></li>
-                      <li class="list-group-item py-1 "><a href="Staff_Health.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-building"></i><span> Add Health</span></a></li>
-                      <li class="list-group-item py-1 "><a href="Card_Add.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-building"></i><span> Add Card</span></a></li>
+                      <li class="list-group-item py-1 "><a href="Staff_Health.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-folder-plus"></i><span> Manage Record</span></a></li>
+                     
                     </ul>               
-                    <a href="#ParkingCollapse" aria-current="true" aria-controls="ParkingCollapse" data-bs-toggle="collapse" aria-expanded="true" class="list-group-item list-group-item-action py-2"><i class="bi bi-person-square me-3"></i><span>Park Management</span></a>
+                    <a href="#ParkingCollapse" aria-current="true" aria-controls="ParkingCollapse" data-bs-toggle="collapse" aria-expanded="true" class="list-group-item list-group-item-action py-2"><i class="bi bi-building me-3"></i><span>Park Management</span></a>
                     <ul class="collapse list-group list-group-flush ps-4" id="ParkingCollapse">
-                      <li class="list-group-item py-1 "><a href="Staff_Add.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-person-plus"></i><span> Add Staff</span></a></li>
-                      <li class="list-group-item py-1 "><a href="Parking_Add_Lot.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-building"></i><span> Add Parking Lot</span></a></li>
+                    <li class="list-group-item py-1 "><a href="Card_Add.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-credit-card"></i><span> Add Card</span></a></li>
+                      <li class="list-group-item py-1 "><a href="Parking_Add_Lot.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-border"></i><span> Add Parking Lot</span></a></li>
                     </ul>               
                     
                    

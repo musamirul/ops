@@ -83,7 +83,7 @@
         <div class="row" style="height:200px">
             <?php if($newUser_id != null){?>
             <div class="card">
-                <h5 class="card-header"><?php echo $user_fname.' ['.$user_id.']'; ?><?php if($user_isactive=='no'){echo '- <span style="color:red">INACTIVE</span>'.' ';} ?></h5>
+                <h5 class="card-header"><?php echo $user_fname.' ['.$user_staffid.']'; ?><?php if($user_isactive=='no'){echo '- <span style="color:red">INACTIVE</span>'.' ';} ?></h5>
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $services_name; ?> - <?php echo $user_position; ?></h5>
                     <p class="card-text">
@@ -113,10 +113,10 @@
                 <table class="table">
                     <thead class="table-dark">
                       <tr>
-                        <th>Start Date</th>
-                        <th>Period</th>
+                        <th>Illness Duration Date</th>
                         <th>Illness Type</th>
                         <th>Remark</th>
+                        <th>Record Date</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -133,9 +133,9 @@
                         ?>
                         <tr>
                             <th><?php echo $result_health['health_startdate']; ?></th>
-                            <th><?php echo $result_health['health_period']; ?></th>
                             <th><?php echo $result_health['health_type']; ?></th>
                             <th><?php echo $result_health['health_remark']; ?></th>
+                            <th><?php echo $result_health['health_recorddate']; ?></th>
                             <th>
                                 <?php if($result_health['health_iscardreturn']=='yes'){ ?>
                                     <button type="submit"  class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#returnCard<?php echo $health_id ?>">Return Card</button>
@@ -209,13 +209,8 @@
                 <div class="form-group row">
                     <div class="col-sm-12">
                     <label>Start Date</label>
-                        <input class="form-control" type="date" name="health_startdate" required autofocus="autofocus" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-12">
-                    <label>Period (month)</label>
-                        <input class="form-control" type="number" name="health_period"  required autofocus="autofocus" />
+                        <!-- <input class="form-control" type="date" name="health_startdate" required autofocus="autofocus" /> -->
+                        <input class="filterdate form-control" type="text" name="health_startdate"/>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -260,15 +255,14 @@
         $user_id = $_POST['user_id'];
         $health_type = $_POST['health_type'];
         $health_startdate = $_POST['health_startdate'];
-        $health_period = $_POST['health_period'];
         $health_remark = $_POST['health_remark'];
 
         date_default_timezone_set("Asia/Kuala_Lumpur");
         $todayDate = date('d/m/Y');
         // $todayTime = date('h:i a');
 
-        $query_addHealth = mysqli_query($con, "INSERT INTO health_record(health_type, health_startdate, health_period, health_remark, health_recorddate, fk_staff_id)
-         VALUES ('$health_type','$health_startdate','$health_period','$health_remark','$todayDate','$user_id')");
+        $query_addHealth = mysqli_query($con, "INSERT INTO health_record(health_type, health_startdate,  health_remark, health_recorddate, fk_staff_id)
+         VALUES ('$health_type','$health_startdate','$health_remark','$todayDate','$user_id')");
 
         $_SESSION['message'] = 'Successfully update information';
 

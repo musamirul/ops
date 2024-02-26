@@ -42,7 +42,7 @@
                             </label>
                         </div>
                         <div class="col">
-                            <input class="form-check-input" name="lot_reserve" type="checkbox" value="yes" checked>
+                            <input class="form-check-input" name="lot_isreserve" type="checkbox" value="yes">
                             <label class="form-check-label" for="flexCheckChecked">
                                 IsReserve
                             </label>
@@ -74,7 +74,7 @@
                                         [<?php  echo $result_card['lot_delegation']; ?>]
                                                                                 
                                             <span class="badge <?php if($lot_isactive=='yes'){echo 'bg-success';}else{echo 'bg-danger';} ?>"><?php if($lot_isactive=='yes'){echo 'ACTIVE';}else{echo 'INACTIVE';} ?></span>
-                                            <span class="badge <?php if($lot_isreserve=='yes'){echo 'bg-success';}else{echo 'bg-danger';} ?>"><?php if($lot_isreserve=='yes'){echo 'UNUSED';}else{echo 'USED';} ?></span>
+                                            <span class="badge <?php if($lot_isreserve=='no'){echo 'bg-success';}else{echo 'bg-danger';} ?>"><?php if($lot_isreserve=='no'){echo 'UNUSED';}else{echo 'USED';} ?></span>
                                     </div>      
                                 </div>
                                 <div class="p-2">

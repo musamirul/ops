@@ -79,7 +79,7 @@
         <div class="row" style="height:200px">
             <?php if($newUser_id != null){?>
             <div class="card">
-                <h5 class="card-header"><?php echo $user_fname.' ['.$user_id.']'; ?><?php if($user_isactive=='no'){echo '- <span style="color:red">INACTIVE</span>'.' ';} ?></h5>
+                <h5 class="card-header"><?php echo $user_fname.' ['.$user_staffid.']'; ?><?php if($user_isactive=='no'){echo '- <span style="color:red">INACTIVE</span>'.' ';} ?></h5>
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $services_name; ?> - <?php echo $user_position; ?></h5>
                     <p class="card-text">
@@ -105,44 +105,51 @@
         <span class="d-grid mx-auto mt-3 mb-3" style="border-bottom:0.5px solid rgb(210, 240, 240);"></span>
         <div class="row pt-2">
             <div style="background-color: rgb(210, 250, 250); " class="col shadow pt-3 rounded-4">
-            <button type="submit" style="width:150px"  class="btn btn-primary btn-sm mb-2" data-bs-toggle="modal" data-bs-target="#addParking<?php echo $user_id ?>">Add Health Record</button>
+            <button type="submit" style="width:150px"  class="btn btn-primary btn-sm mb-2" data-bs-toggle="modal" data-bs-target="#addParking<?php echo $user_id ?>">Add Parking Record</button>
                 <table class="table">
                     <thead class="table-dark">
                       <tr>
                         <th>Access Card</th>
                         <th>Parking Lot</th>
-                        <th>Duration(month)</th>
+                        <th>Card Receive Date</th>
                         <th>IsCardReturn</th>
                         <th>DateCardReturn</th>
-                        <th>Card DateReturn</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                         <?php
-                            $query_health = mysqli_query($con,"SELECT * FROM parking WHERE fk_staff_id='$user_id' ORDER BY parking_id DESC ");
+                            $query_health = mysqli_query($con,"SELECT * FROM parking WHERE fk_user_id='$user_id' ORDER BY parking_id DESC ");
                             while($result_health = mysqli_fetch_array($query_health)){
                                 
                                 $fk_card_id = $result_health['fk_card_id'];
+                                $fk_lot_id = $result_health['fk_lot_id'];
+                                $parking_datecardborrow = $result_health['parking_datecardborrow'];
+                                $parking_iscardreturn = $result_health['parking_iscardreturn'];
+                                $parking_datecardreturn = $result_health['parking_datecardreturn'];
+                                $parking_id = $result_health['parking_id'];
                                 
                                 $query_card = mysqli_query($con,"SELECT * FROM card WHERE card_id='$fk_card_id'");
                                 $result_card = mysqli_fetch_array($query_card);
                                 $card_serialnum = $result_card['card_serialnum'];
+
+                                $query_lot = mysqli_query($con,"SELECT * FROM parking_lot WHERE lot_id = '$fk_lot_id'");
+                                $result_lot = mysqli_fetch_array($query_lot);
+                                $lot_number = $result_lot['lot_number'];
                         ?>
                         <tr>
-                            <th><?php echo $result_health['health_startdate']; ?></th>
-                            <th><?php echo $result_health['health_period']; ?></th>
-                            <th><?php echo $result_health['health_type']; ?></th>
                             <th><?php echo $card_serialnum; ?></th>
-                            <th><?php echo $result_health['health_iscardreturn']; ?></th>
-                            <th><?php echo $result_health['health_datecardreturn']; ?></th>
+                            <th><?php echo $lot_number; ?></th>
+                            <th><?php echo $parking_datecardborrow; ?></th>
+                            <th><?php echo $parking_iscardreturn ?></th>
+                            <th><?php echo $parking_datecardreturn ?></th>
                             <th>
-                                <?php if($result_health['health_iscardreturn']=='yes'){ ?>
+                                <?php if($result_health['parking_iscardreturn']=='yes'){ ?>
                                     <button type="submit"  class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#returnCard<?php echo $health_id ?>">Return Card</button>
-                                <?php }elseif($result_health['health_iscardreturn']=='no'){ ?>
+                                <?php }elseif($result_health['parking_iscardreturn']=='no'){ ?>
                                     <button type="submit"  class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#receiveCard<?php echo $health_id ?>">Receive Card</button>
                                 <?php } ?>
-                                <button type="submit"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editHealth<?php echo $health_id ?>">Edit Illness</button>
+                                <!-- <button type="submit"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editHealth<?php echo $health_id ?>">Edit Parking</button> -->
 
                                 <!-- Edit Health Modal -->
                                 <div class="modal fade" id="editHealth<?php echo $health_id?>" tabindex="-1" aria-labelledby="editModalLabel" class="modal fade" role="dialog">
@@ -182,7 +189,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel">Illness Date <?php echo $result_health['health_startdate'];?></h5>
+                                        <h5 class="modal-title" id="deleteModalLabel">Serial Number <?php echo $card_serialnum;?></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                         <div class="modal-body">
@@ -191,7 +198,8 @@
                                         <div class="modal-footer">
                                         <form method="post">
                                             <input type="hidden" value="<?php echo $card_serialnum; ?>" name="card_serialnum" />
-                                            <input type="hidden" value="<?php echo $health_id; ?>" name="health_id" />
+                                            <input type="hidden" value="<?php echo $fk_lot_id; ?>" name="lot_id" />
+                                            <input type="hidden" value="<?php echo $parking_id ; ?>" name="parking_id" />
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="submit" name="receiveCard" class="btn btn-danger">Receive</button>
                                         </form>
@@ -205,7 +213,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel">Illness Date <?php echo $result_health['health_startdate'];?></h5>
+                                        <h5 class="modal-title" id="deleteModalLabel">Serial Number <?php echo $card_serialnum;?></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                         <div class="modal-body">
@@ -214,7 +222,8 @@
                                         <div class="modal-footer">
                                         <form method="post">
                                             <input type="hidden" value="<?php echo $card_serialnum; ?>" name="card_serialnum" />
-                                            <input type="hidden" value="<?php echo $health_id; ?>" name="health_id" />
+                                            <input type="hidden" value="<?php echo $fk_lot_id; ?>" name="lot_id" />
+                                            <input type="hidden" value="<?php echo $parking_id ; ?>" name="parking_id" />
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="submit" name="returnCard" class="btn btn-danger">Return</button>
                                         </form>
@@ -285,15 +294,12 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-12">
-                    <label>duration (month)</label>
-                        <input class="form-control" type="number" name="parking_duration"  required autofocus="autofocus" />
-                    </div>
                 </div>
             </div> 
             <div class="modal-footer">
                     <input type="hidden" value="<?php echo $user_id;?>" name="user_id" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" name="addHealth" class="btn btn-primary">Save</button>
+                    <button type="submit" name="addParking" class="btn btn-primary">Save</button>
             </form>
             </div>   
         </div>
@@ -324,32 +330,36 @@
 
     if(isset($_POST['receiveCard'])){
         $card_serialnum = $_POST['card_serialnum'];
-        $health_id = $_POST['health_id'];
+        $lot_id = $_POST['lot_id'];
+        $parking_id = $_POST['parking_id'];
 
         date_default_timezone_set("Asia/Kuala_Lumpur");
         $todayDate = date('d/m/Y h:i:s a', time());
         // $todayTime = date('h:i a');
 
-        $query_updateHealth = mysqli_query($con, "UPDATE health_record SET health_iscardreturn='yes',health_datecardreturn='$todayDate' WHERE health_id='$health_id'");
+        $query_updateLot = mysqli_query($con, "UPDATE parking_lot SET lot_isreserve='yes' WHERE lot_id='$lot_id'");
 
         $query_updateCard = mysqli_query($con,"UPDATE card SET card_isuse='no' WHERE card_serialnum='$card_serialnum'");
+        $query_updateParking= mysqli_query($con,"UPDATE parking SET parking_iscardreturn='yes', parking_datecardreturn='$todayDate' WHERE parking_id='$parking_id'");
 
         $_SESSION['message'] = 'Successfully update information';
 
-        echo '<script>window.location.href="Staff_Health.php?msg=success"</script>';
+        echo '<script>window.location.href="Staff_Parking.php?msg=success"</script>';
 
     }
     if(isset($_POST['returnCard'])){
         $card_serialnum = $_POST['card_serialnum'];
-        $health_id = $_POST['health_id'];
+        $lot_id = $_POST['lot_id'];
+        $parking_id = $_POST['parking_id'];
 
         date_default_timezone_set("Asia/Kuala_Lumpur");
         $todayDate = date('d/m/Y h:i:s a', time());
         // $todayTime = date('h:i a');
 
-        $query_updateHealth = mysqli_query($con, "UPDATE health_record SET health_iscardreturn='no',health_datecardreturn='' WHERE health_id='$health_id'");
+        $query_updateHealth = mysqli_query($con, "UPDATE parking_lot SET lot_isreserve='no' WHERE lot_id='$lot_id'");
 
         $query_updateCard = mysqli_query($con,"UPDATE card SET card_isuse='yes' WHERE card_serialnum='$card_serialnum'");
+        $query_updateParking= mysqli_query($con,"UPDATE parking SET parking_iscardreturn='no', parking_datecardreturn='' WHERE parking_id='$parking_id'");
 
         $_SESSION['message'] = 'Successfully update information';
 
@@ -360,15 +370,14 @@
         $user_id = $_POST['user_id'];
         $lot_id = $_POST['lot_id'];
         $card_id = $_POST['card_id'];
-        $parking_duration = $_POST['parking_duration'];
 
         date_default_timezone_set("Asia/Kuala_Lumpur");
         $todayDate = date('d/m/Y');
         // $todayTime = date('h:i a');
 
-        $query_addParking = mysqli_query($con, "INSERT INTO parking(fk_user_id, fk_card_id, fk_lot_id, parking_iscardreturn,
-         parking_datecardreturn, parking_duration) 
-        VALUES ('$user_id','$card_id','$lot_id','no','','$parking_duration')");
+        $query_addParking = mysqli_query($con, "INSERT INTO parking(fk_user_id, fk_card_id, fk_lot_id, parking_iscardreturn, parking_datecardborrow,
+         parking_datecardreturn) 
+        VALUES ('$user_id','$card_id','$lot_id','no','$todayDate','')");
 
         $query_updateCard = mysqli_query($con,"UPDATE card SET card_isuse='yes' WHERE card_id='$card_id'");
 
