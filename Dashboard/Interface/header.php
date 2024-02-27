@@ -41,6 +41,7 @@
                     <ul class="collapse list-group list-group-flush ps-4" id="ParkingCollapse">
                     <li class="list-group-item py-1 "><a href="Card_Add.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-credit-card"></i><span> Add Card</span></a></li>
                       <li class="list-group-item py-1 "><a href="Parking_Add_Lot.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-border"></i><span> Add Parking Lot</span></a></li>
+                      <li class="list-group-item py-1 "><a href="Staff_info.php" class="list-group-item list-group-item-action py-2 " aria-current="true"><i class="bi bi-border"></i><span> Add Staff_Info</span></a></li>
                     </ul>               
                     
                    

@@ -119,7 +119,7 @@
                       $query_countreq = mysqli_query($con,"SELECT * FROM car_record WHERE fk_staff_id = '$user_id'");
                       while($result_countreq = mysqli_fetch_array($query_countreq)){
                   ?>
-                      <div class="card bg-primary me-2" style="max-width: 18rem;">
+                      <div class="card me-2" style="max-width: 18rem;background-color:#E8B820">
                           <div class="card-header text-white"><b><?php echo $result_countreq['car_platenum'] ?></b></div>
                           <div class="card-body">
                               <p class="card-title text-white"><?php echo $result_countreq['car_brand'].' '.$result_countreq['car_model'].' ['.$result_countreq['car_color'].']'; ?></p>
@@ -139,7 +139,47 @@
         ?>
     </div>
     <div class="row">
-      
+    <div class="btn-group">
+        <?php
+          $query_countreq = mysqli_query($con,"SELECT count(*) FROM user WHERE user_type = '2' AND user_isactive='yes'");
+          $result_countreq = mysqli_fetch_array($query_countreq);
+          $reqcount = $result_countreq[0];
+        ?>
+        <?php
+          $query_countreqc = mysqli_query($con,"SELECT count(*) FROM user WHERE user_type = '3' AND user_isactive='yes'");
+          $result_countreqc = mysqli_fetch_array($query_countreqc);
+          $reqcountc = $result_countreqc[0];
+        ?>
+        <?php
+          $query_countreqm = mysqli_query($con,"SELECT count(*) FROM user WHERE user_type = '4' AND user_isactive='yes'");
+          $result_countreqm = mysqli_fetch_array($query_countreqm);
+          $reqcountm = $result_countreqm[0];
+        ?>
+        <?php
+          $query_countreqv = mysqli_query($con,"SELECT count(*) FROM user WHERE user_type = '5' AND user_isactive='yes'");
+          $result_countreqv = mysqli_fetch_array($query_countreqv);
+          $reqcountv = $result_countreqv[0];
+        ?>
+        <?php
+          $query_countreqo = mysqli_query($con,"SELECT count(*) FROM user WHERE user_type = '5' AND user_isactive='yes'");
+          $result_countreqo = mysqli_fetch_array($query_countreqo);
+          $reqcounto = $result_countreqo[0];
+        ?>
+        
+        <?php
+          $query_countreqi = mysqli_query($con,"SELECT count(*) FROM health_record WHERE health_iscomplete = 'no'");
+          $result_countreqi = mysqli_fetch_array($query_countreqi);
+          $reqcounti = $result_countreqi[0];
+        ?>
+        
+        <a href="opsviewer.php" class="btn btn-secondary">Staff Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcount; ?></span></a>
+        <a href="opsviewer_m.php" class="btn btn-secondary">Management Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountm; ?></span></a>
+        <a href="opsviewer_c.php" class="btn btn-secondary">Consultant Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountc; ?></span></a>
+        <a href="opsviewer_v.php" class="btn btn-secondary">Visiting Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountv; ?></span></a>
+        <a href="opsviewer_o.php" class="btn btn-secondary active" aria-current="page">Outsource Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcounto; ?></span></a>
+        <a href="opsviewer_i.php" class="btn btn-secondary">Health Issue Staff <span class="badge bg-dark rounded-pill"><?php echo $reqcounti; ?></span></a>
+        <a href="opsviewer_info.php" class="btn btn-dark">Total Info <span class="badge bg-dark rounded-pill"></span></a>
+      </div>
     </div>
     <div class="row bg-white shadow rounded-bottom me-1 ms-1 p-2">
       <table class="table table-striped-columns shadow rounded" width="98%" style="border-collapse: collapse; font-size: 13px">

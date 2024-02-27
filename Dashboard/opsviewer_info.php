@@ -172,83 +172,53 @@
           $reqcounti = $result_countreqi[0];
         ?>
         
-        <a href="opsviewer.php" class="btn btn-secondary active" aria-current="page">Staff Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcount; ?></span></a>
+        <a href="opsviewer.php" class="btn btn-secondary">Staff Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcount; ?></span></a>
         <a href="opsviewer_m.php" class="btn btn-secondary">Management Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountm; ?></span></a>
         <a href="opsviewer_c.php" class="btn btn-secondary">Consultant Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountc; ?></span></a>
         <a href="opsviewer_v.php" class="btn btn-secondary">Visiting Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountv; ?></span></a>
         <a href="opsviewer_o.php" class="btn btn-secondary">Outsource Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcounto; ?></span></a>
         <a href="opsviewer_i.php" class="btn btn-secondary">Health Issue Staff <span class="badge bg-dark rounded-pill"><?php echo $reqcounti; ?></span></a>
-        <a href="opsviewer_i.php" class="btn btn-dark">Total Info <span class="badge bg-dark rounded-pill"></span></a>
+        <a href="opsviewer_info.php" class="btn btn-dark active" aria-current="page">Total Info <span class="badge bg-dark rounded-pill"></span></a>
       </div>
     </div>
     <div class="row bg-white shadow rounded-bottom me-1 ms-1 p-2">
-      <table class="table table-striped-columns shadow rounded" width="98%" style="border-collapse: collapse; font-size: 13px">
-        <thead>
-          <tr class="">
-            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:10px;color:#E8B820"><center>No.</center></td>
-            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:150px;color:#E8B820"><center>Name</center></td>
-            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:100px;color:#E8B820"><center>Staff ID</center></td>
-            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:100px;color:#E8B820"><center>Phone</center></td>
-            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:170px;color:#E8B820"><center>Services</center></td>
-            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:110px;color:#E8B820"><center>Position</center></td>
-            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:110px;color:#E8B820"><center>Date Register</center></td>
-            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="color:#E8B820"><center>Car</center></td>
-        </tr>
-        </thead>
-        <tbody>
-          <?php
-            $searchQuery = mysqli_query($con,"SELECT * FROM user
-            WHERE user_type='2'");
-            $count = 0;
-            while($searchResult = mysqli_fetch_array($searchQuery))
-            {
-              $user_id = $searchResult['user_id'];
-              $user_fname = $searchResult['user_fname'];
-              $user_staffid =$searchResult['user_staffid'];
-              $user_phone = $searchResult['user_phone'];
-              $user_position = $searchResult['user_position'];
-              $user_dateregister = $searchResult['user_dateregister'];
-              $user_type = $searchResult['user_type'];
-              $fk_services_id = $searchResult['fk_services_id'];
-
-              $query_department = mysqli_query($con,"SELECT * FROM services WHERE services_id = '$fk_services_id'");
-              $result_department = mysqli_fetch_array($query_department);
-              $services_name = $result_department['services_name'];
-
-              $query_emptype = mysqli_query($con,"SELECT * FROM employee_type WHERE emptype_id = '$user_type'");
-              $result_emptype = mysqli_fetch_array($query_emptype);
-              $emptype_name = $result_emptype['emptype_name'];
-              $count++;
-          ?>
-          <tr>
-            <th scope="row"><?php echo $count; ?></th>
-            <td><center><?php echo $user_fname; ?></center></td>
-            <td><center><?php echo $user_staffid; ?></center></td>
-            <td><center><?php echo $user_phone; ?></center></td>
-            <td><center><?php echo $services_name; ?></center></td>
-            <td><center><?php echo $user_position; ?></center></td>
-            <td><center><?php echo $user_dateregister; ?></center></td>
-            <td>
-            <?php
-                $query_showCar = mysqli_query($con,"SELECT * FROM car_record WHERE fk_staff_id = '$user_id' ");
-                while($result_showCar = mysqli_fetch_array($query_showCar)){
-                $car_brand = $result_showCar['car_brand'];
-                $car_model = $result_showCar['car_model'];
-                $car_color = $result_showCar['car_color'];
-                $car_platenum = $result_showCar['car_platenum'];
-                
-            ?>
-              <span style="font-size:12px" class="badge bg-dark rounded-pill"><?php echo $car_platenum.' ['.$car_brand.' '.$car_model.']'; ?></span>
-            <?php
-                }
-            ?>
-            </td>
-          </tr>
-            <?php
-            }
-            ?>
-        </tbody>
-      </table>
+      <div class="col-2"></div>
+      <div class="col ms-5">
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5" style="color:#E8B820">total motorcycle parking b1</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total motorcycle parking b2</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total parking bay basement 2</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total reserved parking (basement)</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total pregnant parking (patient)</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total MD/ED parking</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total oku parking</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total valet parking</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total dialysis parking</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total staff pregnant parking (outside)</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total A&E parking</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total ER doctor parking</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total ambulans parking</span></div>
+        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total oncall parking</span></div>
+      </div>
+      <div class="col-3 me-5">
+        <?php
+          $query_DashboardShow = mysqli_query($con,"SELECT * FROM info ORDER BY info_id DESC LIMIT 1");
+          $result_DashboardShow = mysqli_fetch_array($query_DashboardShow);
+        ?>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded"><center><?php echo $result_DashboardShow['info_motorb1']; ?></center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_motorb2']; ?></center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_bayb2']; ?></center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_reserved']; ?></center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_pregnantpt']; ?>/3</center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_mded']; ?>/2</center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_oku']; ?>/3</center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_valet']; ?>/6</center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_dialysis']; ?></center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_pregnantstaff']; ?></center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_ae']; ?></center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_er']; ?>/3</center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_ambulance']; ?>/1</center></div></div>
+        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_oncall']; ?>/7</center></div></div>
+      </div>
     </div>      
 	</div>
 

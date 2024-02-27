@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 27, 2024 at 10:30 AM
+-- Generation Time: Feb 27, 2024 at 06:21 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -106,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `health_record` (
   `health_startdate` varchar(100) NOT NULL,
   `health_remark` varchar(100) NOT NULL,
   `health_recorddate` varchar(100) NOT NULL,
+  `health_iscomplete` varchar(50) NOT NULL,
   `fk_staff_id` int(50) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
@@ -113,9 +114,40 @@ CREATE TABLE IF NOT EXISTS `health_record` (
 -- Dumping data for table `health_record`
 --
 
-INSERT INTO `health_record` (`health_id`, `health_type`, `health_startdate`, `health_remark`, `health_recorddate`, `fk_staff_id`) VALUES
-(17, 'FEVER', '27/02/2024 - 10/03/2024', 'FEVER HIGH', '27/02/2024', 32),
-(18, 'FEVER', '27/02/2024 - 07/03/2024', 'FEVER HIGH', '27/02/2024', 33);
+INSERT INTO `health_record` (`health_id`, `health_type`, `health_startdate`, `health_remark`, `health_recorddate`, `health_iscomplete`, `fk_staff_id`) VALUES
+(17, 'FEVER', '27/02/2024 - 10/03/2024', 'FEVER HIGH', '27/02/2024', 'no', 32),
+(18, 'FEVER', '27/02/2024 - 07/03/2024', 'FEVER HIGH', '27/02/2024', 'no', 33);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `info`
+--
+
+CREATE TABLE IF NOT EXISTS `info` (
+`info_id` int(11) NOT NULL,
+  `info_motorb1` varchar(50) NOT NULL,
+  `info_motorb2` varchar(50) NOT NULL,
+  `info_bayb2` varchar(50) NOT NULL,
+  `info_reserved` varchar(50) NOT NULL,
+  `info_pregnantpt` varchar(50) NOT NULL,
+  `info_mded` varchar(50) NOT NULL,
+  `info_oku` varchar(50) NOT NULL,
+  `info_valet` varchar(50) NOT NULL,
+  `info_dialysis` varchar(50) NOT NULL,
+  `info_pregnantstaff` varchar(50) NOT NULL,
+  `info_ae` varchar(50) NOT NULL,
+  `info_er` varchar(50) NOT NULL,
+  `info_ambulance` varchar(50) NOT NULL,
+  `info_oncall` varchar(50) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `info`
+--
+
+INSERT INTO `info` (`info_id`, `info_motorb1`, `info_motorb2`, `info_bayb2`, `info_reserved`, `info_pregnantpt`, `info_mded`, `info_oku`, `info_valet`, `info_dialysis`, `info_pregnantstaff`, `info_ae`, `info_er`, `info_ambulance`, `info_oncall`) VALUES
+(1, '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23');
 
 -- --------------------------------------------------------
 
@@ -243,6 +275,12 @@ ALTER TABLE `health_record`
  ADD PRIMARY KEY (`health_id`);
 
 --
+-- Indexes for table `info`
+--
+ALTER TABLE `info`
+ ADD PRIMARY KEY (`info_id`);
+
+--
 -- Indexes for table `parking`
 --
 ALTER TABLE `parking`
@@ -290,6 +328,11 @@ MODIFY `emptype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 ALTER TABLE `health_record`
 MODIFY `health_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT for table `info`
+--
+ALTER TABLE `info`
+MODIFY `info_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `parking`
 --

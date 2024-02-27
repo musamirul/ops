@@ -117,6 +117,7 @@
                         <th>Illness Type</th>
                         <th>Remark</th>
                         <th>Record Date</th>
+                        <th>Status</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -136,13 +137,59 @@
                             <th><?php echo $result_health['health_type']; ?></th>
                             <th><?php echo $result_health['health_remark']; ?></th>
                             <th><?php echo $result_health['health_recorddate']; ?></th>
+                            <th><?php echo $result_health['health_iscomplete']; ?></th>
                             <th>
-                                <?php if($result_health['health_iscardreturn']=='yes'){ ?>
-                                    <button type="submit"  class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#returnCard<?php echo $health_id ?>">Return Card</button>
-                                <?php }elseif($result_health['health_iscardreturn']=='no'){ ?>
-                                    <button type="submit"  class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#receiveCard<?php echo $health_id ?>">Receive Card</button>
+                                <?php if($result_health['health_iscomplete']=='yes'){ ?>
+                                    <button type="submit"  class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#complete<?php echo $health_id ?>">Not Complete</button>
+                                <?php }elseif($result_health['health_iscomplete']=='no'){ ?>
+                                    <button type="submit"  class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#notcomplete<?php echo $health_id ?>">Complete</button>
                                 <?php } ?>
                                 <button type="submit"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editHealth<?php echo $health_id ?>">Edit Illness</button>
+                                
+                                <!-- Receive Card Modal -->
+                                <div class="modal fade" id="complete<?php echo $health_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Health Type <?php echo $result_health['health_type']; ?></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                        <div class="modal-body">
+                                            Do you want to <b>UNCOMPLETE</b> this status? <strong><?php echo $result_health['health_type']; ?></strong>      
+                                        </div> 
+                                        <div class="modal-footer">
+                                        <form method="post">
+                                            <input type="hidden" value="<?php echo $health_id ?>" name="health_id" />
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" name="complete" class="btn btn-danger">Uncomplete</button>
+                                        </form>
+                                        </div>   
+                                    </div>
+                                </div>
+                                </div>
+                                <!-- End Receive Card Modal-->
+                                <!-- Return Card Modal -->
+                                <div class="modal fade" id="notcomplete<?php echo $health_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Health Type <?php echo $result_health['health_type']; ?></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                        <div class="modal-body">
+                                            Do you want to <b>COMPLETE</b> this status? <strong><?php echo $result_health['health_type']; ?></strong>      
+                                        </div> 
+                                        <div class="modal-footer">
+                                        <form method="post">
+                                            <input type="hidden" value="<?php echo $health_id ?>" name="health_id" />
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" name="notcomplete" class="btn btn-danger">Complete</button>
+                                        </form>
+                                        </div>   
+                                    </div>
+                                </div>
+                                </div>
+                                <!-- End Return Card Modal-->
 
                                 <!-- Edit Health Modal -->
                                 <div class="modal fade" id="editHealth<?php echo $health_id?>" tabindex="-1" aria-labelledby="editModalLabel" class="modal fade" role="dialog">
@@ -235,6 +282,34 @@
 
 
 <?php
+    if(isset($_POST['complete'])){
+        $health_id= $_POST['health_id'];
+
+        date_default_timezone_set("Asia/Kuala_Lumpur");
+        $todayDate = date('d/m/Y h:i:s a', time());
+        // $todayTime = date('h:i a');
+
+        $query_updateHealth = mysqli_query($con, "UPDATE health_record SET health_iscomplete='no' WHERE health_id='$health_id'");
+
+        $_SESSION['message'] = 'Successfully update information';
+
+        echo '<script>window.location.href="Staff_Health.php?msg=success"</script>';
+
+    }
+    if(isset($_POST['notcomplete'])){
+        $health_id= $_POST['health_id'];
+
+        date_default_timezone_set("Asia/Kuala_Lumpur");
+        $todayDate = date('d/m/Y h:i:s a', time());
+        // $todayTime = date('h:i a');
+
+        $query_updateHealth = mysqli_query($con, "UPDATE health_record SET health_iscomplete='yes' WHERE health_id='$health_id'");
+
+        $_SESSION['message'] = 'Successfully update information';
+
+        echo '<script>window.location.href="Staff_Health.php?msg=success"</script>';
+
+    }
     if(isset($_POST['editHealth'])){
         $health_id = $_POST['health_id'];
         $health_type = $_POST['health_type'];
@@ -261,8 +336,8 @@
         $todayDate = date('d/m/Y');
         // $todayTime = date('h:i a');
 
-        $query_addHealth = mysqli_query($con, "INSERT INTO health_record(health_type, health_startdate,  health_remark, health_recorddate, fk_staff_id)
-         VALUES ('$health_type','$health_startdate','$health_remark','$todayDate','$user_id')");
+        $query_addHealth = mysqli_query($con, "INSERT INTO health_record(health_type, health_startdate,  health_remark, health_recorddate, health_iscomplete, fk_staff_id)
+         VALUES ('$health_type','$health_startdate','$health_remark','$todayDate','no','$user_id')");
 
         $_SESSION['message'] = 'Successfully update information';
 
