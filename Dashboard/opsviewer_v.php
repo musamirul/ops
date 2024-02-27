@@ -165,17 +165,12 @@
           $result_countreqo = mysqli_fetch_array($query_countreqo);
           $reqcounto = $result_countreqo[0];
         ?>
-        <?php
-          $query_countreqo = mysqli_query($con,"SELECT count(*) FROM health_record WHERE user_type = '5' AND user_isactive='yes'");
-          $result_countreqo = mysqli_fetch_array($query_countreqo);
-          $reqcounto = $result_countreqo[0];
-        ?>
         
-        <a href="opsviewer.php" class="btn btn-secondary active" aria-current="page">Staff Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcount; ?></span></a>
+        <a href="opsviewer.php" class="btn btn-secondary">Staff Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcount; ?></span></a>
         <a href="opsviewer_m.php" class="btn btn-secondary">Management Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountm; ?></span></a>
         <a href="opsviewer_c.php" class="btn btn-secondary">Consultant Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountc; ?></span></a>
         <a href="opsviewer_i.php" class="btn btn-secondary">Illness Parking <span class="badge bg-dark rounded-pill">2</span></a>
-        <a href="opsviewer_v.php" class="btn btn-secondary">Visiting Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountv; ?></span></a>
+        <a href="opsviewer_v.php" class="btn btn-secondary active" aria-current="page">Visiting Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountv; ?></span></a>
         <a href="opsviewer_o.php" class="btn btn-secondary">Outsource Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcounto; ?></span></a>
       </div>
     </div>
@@ -196,7 +191,7 @@
         <tbody>
           <?php
             $searchQuery = mysqli_query($con,"SELECT * FROM user
-            WHERE user_type='2'");
+            WHERE user_type='5'");
             $count = 0;
             while($searchResult = mysqli_fetch_array($searchQuery))
             {
