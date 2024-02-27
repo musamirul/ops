@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2024 at 05:41 PM
+-- Generation Time: Feb 27, 2024 at 10:30 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `card` (
 INSERT INTO `card` (`card_id`, `card_serialnum`, `card_dateregister`, `card_isactive`, `card_isuse`) VALUES
 (2, 'A543847465', '2024-02-22', 'no', 'no'),
 (4, 'A543847463', '2024-02-17', 'no', 'no'),
-(5, 'A543847469', '2024-02-16', 'yes', 'no'),
+(5, 'A543847469', '2024-02-16', 'yes', 'yes'),
 (6, 'A27383A36', '2024-12-31', 'yes', 'no');
 
 -- --------------------------------------------------------
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `car_record` (
   `car_brand` varchar(50) NOT NULL,
   `car_color` varchar(50) NOT NULL,
   `fk_staff_id` int(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 
 --
 -- Dumping data for table `car_record`
@@ -67,7 +67,10 @@ INSERT INTO `car_record` (`car_id`, `car_platenum`, `car_model`, `car_brand`, `c
 (20, 'VJJ1234', 'saga', 'honda', 'BLUE', 27),
 (21, 'BKF1234', 'Myvi', 'Perodua', 'Pink', 27),
 (22, 'vad12351', 'city', 'honda', 'red', 28),
-(23, 'vap1241', 'Myvi', 'honda', 'red', 29);
+(23, 'vap1241', 'Myvi', 'honda', 'red', 29),
+(24, 'kip1324', 'benz', 'mercedes', 'red', 30),
+(26, '2015213', 'AXIA', 'PERODUA ', 'RED', 32),
+(27, 'kkk1234', 'AXIA', 'PERODUA ', 'black', 33);
 
 -- --------------------------------------------------------
 
@@ -104,14 +107,15 @@ CREATE TABLE IF NOT EXISTS `health_record` (
   `health_remark` varchar(100) NOT NULL,
   `health_recorddate` varchar(100) NOT NULL,
   `fk_staff_id` int(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `health_record`
 --
 
 INSERT INTO `health_record` (`health_id`, `health_type`, `health_startdate`, `health_remark`, `health_recorddate`, `fk_staff_id`) VALUES
-(15, 'FEVER', '26/02/2024 - 26/03/2024', 'high fever', '26/02/2024', 27);
+(17, 'FEVER', '27/02/2024 - 10/03/2024', 'FEVER HIGH', '27/02/2024', 32),
+(18, 'FEVER', '27/02/2024 - 07/03/2024', 'FEVER HIGH', '27/02/2024', 33);
 
 -- --------------------------------------------------------
 
@@ -127,14 +131,16 @@ CREATE TABLE IF NOT EXISTS `parking` (
   `parking_iscardreturn` varchar(50) NOT NULL,
   `parking_datecardborrow` varchar(50) NOT NULL,
   `parking_datecardreturn` varchar(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `parking`
 --
 
 INSERT INTO `parking` (`parking_id`, `fk_user_id`, `fk_card_id`, `fk_lot_id`, `parking_iscardreturn`, `parking_datecardborrow`, `parking_datecardreturn`) VALUES
-(3, 27, 5, 10, 'yes', '26/02/2024', '26/02/2024 10:55:28 pm');
+(3, 27, 5, 10, 'yes', '26/02/2024', '26/02/2024 10:55:28 pm'),
+(4, 32, 5, 11, 'no', '27/02/2024', ''),
+(5, 33, 6, 11, 'yes', '27/02/2024', '27/02/2024 02:12:33 pm');
 
 -- --------------------------------------------------------
 
@@ -156,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `parking_lot` (
 
 INSERT INTO `parking_lot` (`lot_id`, `lot_number`, `lot_delegation`, `lot_isactive`, `lot_isreserve`) VALUES
 (10, '522', 'staff', 'yes', 'yes'),
-(11, '524', 'management', 'yes', 'no');
+(11, '524', 'management', 'yes', 'yes');
 
 -- --------------------------------------------------------
 
@@ -194,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_dateregister` varchar(150) NOT NULL,
   `user_isactive` varchar(50) NOT NULL,
   `fk_services_id` int(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
 
 --
 -- Dumping data for table `user`
@@ -203,7 +209,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`user_id`, `user_fname`, `user_staffid`, `user_phone`, `user_position`, `user_type`, `user_dateregister`, `user_isactive`, `fk_services_id`) VALUES
 (27, 'Ameirul Mustaqim', '20122456', '0193071722', 'IT', '2', '2024-12-31', 'yes', 3),
 (28, 'Ali bin Abu', '202348', '01234567', 'Finance', '2', '2024-11-01', 'yes', 2),
-(29, 'anas bin talib', '2012245', '0123487415', 'Nurse', '2', '2024-12-31', 'yes', 4);
+(29, 'anas bin talib', '2012245', '0123487415', 'Nurse', '2', '2024-12-31', 'yes', 4),
+(30, 'drg', '201521', '01234512', 'radiologist', '3', '2024-12-31', 'yes', 3),
+(32, 'OMAR BIN SALAM', '20154215', '012345124', 'IT', '2', '2024-12-31', 'yes', 3),
+(33, 'salam bin isnin', '2016671', '012421541', 'it', '2', '2024-12-31', 'yes', 3);
 
 --
 -- Indexes for dumped tables
@@ -270,7 +279,7 @@ MODIFY `card_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 -- AUTO_INCREMENT for table `car_record`
 --
 ALTER TABLE `car_record`
-MODIFY `car_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+MODIFY `car_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `employee_type`
 --
@@ -280,12 +289,12 @@ MODIFY `emptype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 -- AUTO_INCREMENT for table `health_record`
 --
 ALTER TABLE `health_record`
-MODIFY `health_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `health_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `parking`
 --
 ALTER TABLE `parking`
-MODIFY `parking_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `parking_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `parking_lot`
 --
@@ -300,7 +309,7 @@ MODIFY `services_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
+MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
