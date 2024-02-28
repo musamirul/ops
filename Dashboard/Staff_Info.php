@@ -55,41 +55,49 @@
                 </div>
                 </form>
             </div>
-            <div style="background-color: rgb(219, 250, 215); " class="col ms-5">
-                <div class="row mb-3">
-                    <div class="overflow-auto p-3" style="max-width: auto; max-height: 600px;">
-                        <ol class="list-group list-group-numbered">
-                            <?php
-                                $query_card = mysqli_query($con,"SELECT * FROM parking_lot ORDER BY lot_id DESC ");
-                                while($result_card = mysqli_fetch_array($query_card)){
-                                    $lot_isreserve = $result_card['lot_isreserve'];
-                                    $lot_isactive = $result_card['lot_isactive'];
-                                    $lot_id = $result_card['lot_id'];
-                                
-    
-                            ?>
-                            <li class="list-group-item d-flex align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">
-                                        <?php echo $result_card['lot_number']; ?> 
-                                        [<?php  echo $result_card['lot_delegation']; ?>]
-                                                                                
-                                            <span class="badge <?php if($lot_isactive=='yes'){echo 'bg-success';}else{echo 'bg-danger';} ?>"><?php if($lot_isactive=='yes'){echo 'ACTIVE';}else{echo 'INACTIVE';} ?></span>
-                                            <span class="badge <?php if($lot_isreserve=='no'){echo 'bg-success';}else{echo 'bg-danger';} ?>"><?php if($lot_isreserve=='no'){echo 'UNUSED';}else{echo 'USED';} ?></span>
-                                    </div>      
-                                </div>
-                                <div class="p-2">
-                                    <!-- <button type="submit"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit<?php echo $lot_id ?>">Edit Profile</button> -->
-                                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete<?php echo $lot_id ?>">Delete</button>
-                                </div>
-
-
-                            </li>
-                            
-                            <?php
-                                }
-                            ?>
-                        </ol>
+            <div style="background-color: rgb(219, 250, 215); " class="col">
+                <div class="ms-3">
+                    <center><span style="font-size: 23px;font-weight: bold;">Updated List</span></center>
+                </div>
+                <div class="row mt-3 mb-3">
+                <div class="row bg-white shadow rounded-bottom me-2 ms-2 p-2">
+                    <div class="col">
+                        <div class="row fw-bold mt-1"><span>total motorcycle parking b1</span></div>
+                        <div class="row fw-bold mt-1"><span>total motorcycle parking b2</span></div>
+                        <div class="row fw-bold mt-1"><span>total parking bay basement 2</span></div>
+                        <div class="row fw-bold mt-1"><span>total reserved parking (basement)</span></div>
+                        <div class="row fw-bold mt-1"><span>total pregnant parking (patient)</span></div>
+                        <div class="row fw-bold mt-1"><span>total MD/ED parking</span></div>
+                        <div class="row fw-bold mt-1"><span>total oku parking</span></div>
+                        <div class="row fw-bold mt-1"><span>total valet parking</span></div>
+                        <div class="row fw-bold mt-1"><span>total dialysis parking</span></div>
+                        <div class="row fw-bold mt-1"><span>total staff pregnant parking (outside)</span></div>
+                        <div class="row fw-bold mt-1"><span>total A&E parking</span></div>
+                        <div class="row fw-bold mt-1"><span>total ER doctor parking</span></div>
+                        <div class="row fw-bold mt-1"><span>total ambulans parking</span></div>
+                        <div class="row fw-bold mt-1"><span>total oncall parking</span></div>
+                    </div>
+                    <div class="col-3 me-5">
+                        <?php
+                        $query_DashboardShow = mysqli_query($con,"SELECT * FROM info ORDER BY info_id DESC LIMIT 1");
+                        $result_DashboardShow = mysqli_fetch_array($query_DashboardShow);
+                        ?>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_motorb1']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_motorb2']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_bayb2']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_reserved']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_pregnantpt']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_mded']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_oku']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_valet']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_dialysis']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_pregnantstaff']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_ae']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_er']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_ambulance']; ?></center></div></div>
+                        <div class="row ps-2 mt-1"><div><center><?php echo $result_DashboardShow['info_oncall']; ?></center></div></div>
+                    </div>
+                    </div>      
                     </div>
                     
                 </div>

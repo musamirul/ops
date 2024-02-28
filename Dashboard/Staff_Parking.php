@@ -91,6 +91,8 @@
                     </p>
                 </div>
             </div>
+            <?php }else{?>
+                <center><h2 class='mt-5'>No Record</h2></center>
             <?php } ?>
         </div>
         <div class="row">
@@ -105,7 +107,9 @@
         <span class="d-grid mx-auto mt-3 mb-3" style="border-bottom:0.5px solid rgb(210, 240, 240);"></span>
         <div class="row pt-2">
             <div style="background-color: rgb(210, 250, 250); " class="col shadow pt-3 rounded-4">
+            <?php if($user_id != ''){ ?>
             <button type="submit" style="width:150px"  class="btn btn-primary btn-sm mb-2" data-bs-toggle="modal" data-bs-target="#addParking<?php echo $user_id ?>">Add Parking Record</button>
+            <?php } ?>
                 <table class="table">
                     <thead class="table-dark">
                       <tr>

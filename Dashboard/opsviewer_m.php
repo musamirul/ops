@@ -161,23 +161,29 @@
           $reqcountv = $result_countreqv[0];
         ?>
         <?php
-          $query_countreqo = mysqli_query($con,"SELECT count(*) FROM user WHERE user_type = '5' AND user_isactive='yes'");
-          $result_countreqo = mysqli_fetch_array($query_countreqo);
-          $reqcounto = $result_countreqo[0];
+          // $query_countreqo = mysqli_query($con,"SELECT count(*) FROM user WHERE user_type = '5' AND user_isactive='yes'");
+          // $result_countreqo = mysqli_fetch_array($query_countreqo);
+          // $reqcounto = $result_countreqo[0];
         ?>
         
         <?php
-          $query_countreqi = mysqli_query($con,"SELECT count(*) FROM health_record WHERE health_iscomplete = 'no'");
+          $query_countreqi = mysqli_query($con,"SELECT count(*) FROM health_record WHERE health_iscomplete = 'no'AND health_type ='other'");
           $result_countreqi = mysqli_fetch_array($query_countreqi);
           $reqcounti = $result_countreqi[0];
+        ?>
+        <?php
+          $query_countreqp = mysqli_query($con,"SELECT count(*) FROM health_record WHERE health_iscomplete = 'no' AND health_type='pregnant'");
+          $result_countreqp = mysqli_fetch_array($query_countreqp);
+          $reqcountp = $result_countreqp[0];
         ?>
         
         <a href="opsviewer.php" class="btn btn-secondary">Staff Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcount; ?></span></a>
         <a href="opsviewer_m.php" class="btn btn-secondary active" aria-current="page">Management Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountm; ?></span></a>
         <a href="opsviewer_c.php" class="btn btn-secondary">Consultant Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountc; ?></span></a>
         <a href="opsviewer_v.php" class="btn btn-secondary">Visiting Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcountv; ?></span></a>
-        <a href="opsviewer_o.php" class="btn btn-secondary">Outsource Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcounto; ?></span></a>
+        <!-- <a href="opsviewer_o.php" class="btn btn-secondary">Outsource Parking <span class="badge bg-dark rounded-pill"><?php echo $reqcounto; ?></span></a> -->
         <a href="opsviewer_i.php" class="btn btn-secondary">Health Issue Staff <span class="badge bg-dark rounded-pill"><?php echo $reqcounti; ?></span></a>
+        <a href="opsviewer_p.php" class="btn btn-secondary">Pregnant Staff <span class="badge bg-dark rounded-pill"><?php echo $reqcountp; ?></span></a>
         <a href="opsviewer_info.php" class="btn btn-dark">Total Info <span class="badge bg-dark rounded-pill"></span></a>
       </div>
     </div>

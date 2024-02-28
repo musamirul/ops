@@ -24,11 +24,11 @@
                 <div class="col mb-3">
                     <div class="row-sm-4">
                         <label class="form-label">Staff Name</label>
-                        <input class="form-control " name="Staff_Name" placeholder="Staff Full Name">
+                        <input class="form-control " name="Staff_Name" placeholder="Staff Full Name" required>
                     </div>
                     <div class="row-sm-4">
                         <label class="form-label">Staff ID</label>
-                        <input class="form-control " name="Staff_Id" placeholder="Staff ID Number">
+                        <input class="form-control " name="Staff_Id" placeholder="Staff ID Number" required>
                     </div>
                     <div class="row-sm-4">
                         <label class="form-label">Employee Type</label>
@@ -63,16 +63,16 @@
                     </div>
                     <div class="row-sm-4">
                         <label class="form-label">Position</label>
-                        <input class="form-control " name="Staff_Position" placeholder="Position">
+                        <input class="form-control " name="Staff_Position" placeholder="Position" required>
                     </div>
                     <div class="row-sm-4">
                         <label class="form-label">Phone</label>
-                        <input class="form-control " name="Staff_Phone" placeholder="013245678">
+                        <input class="form-control " name="Staff_Phone" placeholder="013245678" required>
                     </div>
                     
                     <div class="row-sm-3">
                         <label class="form-label">Registered Date</label>
-                        <input class="form-control " type="date" name="Staff_Register">
+                        <input class="form-control " type="date" name="Staff_Register" required>
                     </div>
                     <div class="row-sm-3">
                         <input class="form-check-input" name="isActive" type="checkbox" value="yes" checked>

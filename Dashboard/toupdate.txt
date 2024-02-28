@@ -1,0 +1,23 @@
+Search
+-search by staff id
+
+Health issue staff
+-remove date register
+-add duration (start date-end) on header
+-add remarks column on header  
+-add card no column on header                    
+
+pregnant parking
+-add lot parking on header
+-add duration (start date-end) on header 
+-add card no column on header
+
+admin  
+-select parking lot add NIL
+-select card add NIL
+
+Staff Profile
+- staff id / dr code / nill
+- Employee type change to parking type
+- iactive x function kat UI front
+
