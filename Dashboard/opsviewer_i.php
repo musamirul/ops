@@ -193,11 +193,13 @@
           <tr class="">
             <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:10px;color:#E8B820"><center>No.</center></td>
             <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:150px;color:#E8B820"><center>Name</center></td>
-            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:100px;color:#E8B820"><center>Staff ID</center></td>
-            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:100px;color:#E8B820"><center>Phone</center></td>
+            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:70px;color:#E8B820"><center>Staff ID</center></td>
+            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:80px;color:#E8B820"><center>Phone</center></td>
             <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:170px;color:#E8B820"><center>Services</center></td>
-            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:110px;color:#E8B820"><center>Position</center></td>
-            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:110px;color:#E8B820"><center>Date Register</center></td>
+            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:60px;color:#E8B820"><center>Position</center></td>
+            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:200px;color:#E8B820"><center>Duration</center></td>
+            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:90px;color:#E8B820"><center>Remark</center></td>
+            <td class="bg-dark bg-gradient shadow-sm fw-bold" style="width:90px;color:#E8B820"><center>Card</center></td>
             <td class="bg-dark bg-gradient shadow-sm fw-bold" style="color:#E8B820"><center>Car</center></td>
         </tr>
         </thead>
@@ -210,7 +212,7 @@
             $fk_user_id=$searchResultH['fk_staff_id'];
 
             $searchQuery = mysqli_query($con,"SELECT * FROM user
-            WHERE user_id='$fk_user_id'");
+            WHERE user_id='$fk_user_id' AND user_isactive='yes'");
             $searchResult = mysqli_fetch_array($searchQuery);
             
               $user_id = $searchResult['user_id'];
@@ -226,6 +228,19 @@
               $result_department = mysqli_fetch_array($query_department);
               $services_name = $result_department['services_name'];
 
+              $query_health = mysqli_query($con,"SELECT * FROM health_record WHERE fk_staff_id = '$user_id' AND health_iscomplete = 'no'");
+              $result_health = mysqli_fetch_array($query_health);
+              $health_duration = $result_health['health_startdate'];
+              $health_remark = $result_health['health_remark'];
+
+              $query_parking = mysqli_query($con,"SELECT * FROM parking WHERE fk_user_id = '$user_id' AND parking_iscardreturn = 'no'");
+              $result_parking = mysqli_fetch_array($query_parking);
+              $fk_card_id = $result_parking['fk_card_id'];
+
+              $query_card = mysqli_query($con,"SELECT * FROM card WHERE card_id = '$fk_card_id'");
+              $result_card = mysqli_fetch_array($query_card);
+              $card_serialnum = $result_card['card_serialnum'];
+
               $query_emptype = mysqli_query($con,"SELECT * FROM employee_type WHERE emptype_id = '$user_type'");
               $result_emptype = mysqli_fetch_array($query_emptype);
               $emptype_name = $result_emptype['emptype_name'];
@@ -238,7 +253,9 @@
             <td><center><?php echo $user_phone; ?></center></td>
             <td><center><?php echo $services_name; ?></center></td>
             <td><center><?php echo $user_position; ?></center></td>
-            <td><center><?php echo $user_dateregister; ?></center></td>
+            <td><center><?php echo $health_duration; ?></center></td>
+            <td><center><?php echo $health_remark; ?></center></td>
+            <td><center><?php echo $card_serialnum; ?></center></td>
             <td>
             <?php
                 $query_showCar = mysqli_query($con,"SELECT * FROM car_record WHERE fk_staff_id = '$user_id' ");

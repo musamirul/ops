@@ -125,10 +125,13 @@
         $info_ambulance = $_POST['info_ambulance'];
         $info_oncall = $_POST['info_oncall'];
 
+        date_default_timezone_set("Asia/Kuala_Lumpur");
+        $todayDate = date('d/m/Y h:i:s a', time());
+
         $query_addLot = mysqli_query($con, "INSERT INTO info(info_motorb1, info_motorb2, info_bayb2, info_reserved, info_pregnantpt, info_mded, info_oku, info_valet, 
-        info_dialysis, info_pregnantstaff, info_ae, info_er, info_ambulance, info_oncall) 
+        info_dialysis, info_pregnantstaff, info_ae, info_er, info_ambulance, info_oncall,info_date) 
         VALUES ('$info_motorb1','$info_motorb2','$info_bayb2','$info_reserved','$info_pregnantpt','$info_mded','$info_oku','$info_valet','$info_dialysis',
-        '$info_pregnantstaff','$info_ae','$info_er','$info_ambulance','$info_oncall')");
+        '$info_pregnantstaff','$info_ae','$info_er','$info_ambulance','$info_oncall','$todayDate')");
 
         $_SESSION['message'] = 'Successfully update information';   
         echo '<script>window.location.href="Staff_info.php?msg=success"</script>';

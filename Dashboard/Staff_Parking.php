@@ -118,6 +118,7 @@
                         <th>Card Receive Date</th>
                         <th>IsCardReturn</th>
                         <th>DateCardReturn</th>
+                        <th>DateClearLot</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -131,6 +132,7 @@
                                 $parking_datecardborrow = $result_health['parking_datecardborrow'];
                                 $parking_iscardreturn = $result_health['parking_iscardreturn'];
                                 $parking_datecardreturn = $result_health['parking_datecardreturn'];
+                                $parking_datelotclear = $result_health['parking_datelotclear'];
                                 $parking_id = $result_health['parking_id'];
                                 
                                 $query_card = mysqli_query($con,"SELECT * FROM card WHERE card_id='$fk_card_id'");
@@ -142,54 +144,48 @@
                                 $lot_number = $result_lot['lot_number'];
                         ?>
                         <tr>
-                            <th><?php echo $card_serialnum; ?></th>
-                            <th><?php echo $lot_number; ?></th>
+                            <th><?php if($fk_card_id==0){echo 'n/a';}else{echo $card_serialnum;} ?></th>
+                            <th><?php if($fk_lot_id==0){echo 'n/a';}else{echo $lot_number; } ?></th>
                             <th><?php echo $parking_datecardborrow; ?></th>
                             <th><?php echo $parking_iscardreturn ?></th>
                             <th><?php echo $parking_datecardreturn ?></th>
-                            <th>
-                                <?php if($result_health['parking_iscardreturn']=='yes'){ ?>
-                                    <button type="submit"  class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#returnCard<?php echo $health_id ?>">Return Card</button>
-                                <?php }elseif($result_health['parking_iscardreturn']=='no'){ ?>
-                                    <button type="submit"  class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#receiveCard<?php echo $health_id ?>">Receive Card</button>
+                            <th><?php echo $parking_datelotclear ?></th>
+                            <th><?php if($fk_card_id!=0){ ?>
+                                    <?php if($result_health['parking_iscardreturn']=='yes'){ ?>
+                                        <button type="submit"  class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#returnCard<?php echo $parking_id ?>">Return Card</button>
+                                    <?php }elseif($result_health['parking_iscardreturn']=='no'){ ?>
+                                        <button type="submit"  class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#receiveCard<?php echo $parking_id ?>">Receive Card</button>
+                                    <?php } ?>
+                                <?php }elseif($fk_card_id==0 && $fk_lot_id>=1) {?>
+                                    <button type="submit"  class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#clearLot<?php echo $parking_id ?>">Clear Parking Lot</button>
                                 <?php } ?>
-                                <!-- <button type="submit"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editHealth<?php echo $health_id ?>">Edit Parking</button> -->
-
-                                <!-- Edit Health Modal -->
-                                <div class="modal fade" id="editHealth<?php echo $health_id?>" tabindex="-1" aria-labelledby="editModalLabel" class="modal fade" role="dialog">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel">Edit <strong><?php echo $result_health['health_type'];?></strong> ?</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <form method="post">
-                                            <div class="modal-body">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                    <label>Illness Type</label>
-                                                        <input class="form-control" placeholder="Illness Type" name="health_type" value="<?php echo $result_health['health_type']; ?>" required autofocus="autofocus" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                    <label>Remark</label>
-                                                        <input class="form-control" placeholder="Enter Remark" name="health_remark" value="<?php echo $result_health['health_remark']; ?>" required autofocus="autofocus" />
-                                                    </div>
-                                                </div>                                         
-                                                <div class="modal-footer">
-                                                    <input type="hidden" value="<?php echo $health_id;?>" name="health_id" />
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" name="editHealth" class="btn btn-primary">Save</button>
-                                                </form>
-                                                </div>
-                                            </div>   
-                                        </div>
+                                
+                                <!-- Clear Lot Modal -->
+                                <div class="modal fade" id="clearLot<?php echo $parking_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Lot Number <?php echo $lot_number;?></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                        <div class="modal-body">
+                                            Do you want to clear lot? <strong><?php echo $lot_number; ?></strong>      
+                                        </div> 
+                                        <div class="modal-footer">
+                                        <form method="post">
+                                            <input type="hidden" value="<?php echo $fk_lot_id; ?>" name="lot_id" />
+                                            <input type="hidden" value="<?php echo $parking_id ; ?>" name="parking_id" />
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" name="clearLot" class="btn btn-danger">Clear</button>
+                                        </form>
+                                        </div>   
                                     </div>
                                 </div>
+                                </div>
+                                <!-- End Clear Lot Modal-->
                                 
                                 <!-- Receive Card Modal -->
-                                <div class="modal fade" id="receiveCard<?php echo $health_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
+                                <div class="modal fade" id="receiveCard<?php echo $parking_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
@@ -213,7 +209,7 @@
                                 </div>
                                 <!-- End Receive Card Modal-->
                                 <!-- Return Card Modal -->
-                                <div class="modal fade" id="returnCard<?php echo $health_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
+                                <div class="modal fade" id="returnCard<?php echo $parking_id?>" tabindex="-1" aria-labelledby="deleteModalLabel" class="modal fade" role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
@@ -264,6 +260,7 @@
                     <div class="col-sm-12">
                     <label>Select Card</label>
                         <select name="card_id" class="form-select ">
+                                <option value="null">none</option>
                                 <?php
                                     $query_empShow = mysqli_query($con,"SELECT * FROM card WHERE card_isactive='yes' AND card_isuse='no' ORDER BY card_id");
                                     while($result_empShow = mysqli_fetch_array($query_empShow)){
@@ -282,6 +279,7 @@
                     <div class="col-sm-12">
                     <label>Select Parking Lot</label>
                         <select name="lot_id" class="form-select ">
+                                <option value="null">none</option>
                                 <?php
                                     $query_empShow = mysqli_query($con,"SELECT * FROM parking_lot WHERE lot_isactive='yes' AND lot_isreserve='no' ORDER BY lot_id");
                                     while($result_empShow = mysqli_fetch_array($query_empShow)){
@@ -315,20 +313,22 @@
 
 
 <?php
-    if(isset($_POST['editHealth'])){
-        $health_id = $_POST['health_id'];
-        $health_type = $_POST['health_type'];
-        $health_remark = $_POST['health_remark'];
+    if(isset($_POST['clearLot'])){
+        $lot_id = $_POST['lot_id'];
+        $parking_id = $_POST['parking_id'];
 
         date_default_timezone_set("Asia/Kuala_Lumpur");
         $todayDate = date('d/m/Y h:i:s a', time());
         // $todayTime = date('h:i a');
 
-        $query_updateHealth = mysqli_query($con, "UPDATE health_record SET health_type='$health_type',health_remark='$health_remark' WHERE health_id='$health_id'");
+
+        $query_updateLot = mysqli_query($con, "UPDATE parking_lot SET lot_isreserve='no' WHERE lot_id='$lot_id'");
+
+        $query_updateParking= mysqli_query($con,"UPDATE parking SET parking_iscardreturn='yes', parking_datecardreturn='$todayDate', parking_datelotclear='$todayDate' WHERE parking_id='$parking_id'");
 
         $_SESSION['message'] = 'Successfully update information';
 
-        echo '<script>window.location.href="Staff_Health.php?msg=success"</script>';
+        echo '<script>window.location.href="Staff_Parking.php?msg=success"</script>';
 
     }
 
@@ -341,10 +341,12 @@
         $todayDate = date('d/m/Y h:i:s a', time());
         // $todayTime = date('h:i a');
 
-        $query_updateLot = mysqli_query($con, "UPDATE parking_lot SET lot_isreserve='yes' WHERE lot_id='$lot_id'");
+        if($lot_id!=0){
+            $query_updateLot = mysqli_query($con, "UPDATE parking_lot SET lot_isreserve='no' WHERE lot_id='$lot_id'");
+        }
 
         $query_updateCard = mysqli_query($con,"UPDATE card SET card_isuse='no' WHERE card_serialnum='$card_serialnum'");
-        $query_updateParking= mysqli_query($con,"UPDATE parking SET parking_iscardreturn='yes', parking_datecardreturn='$todayDate' WHERE parking_id='$parking_id'");
+        $query_updateParking= mysqli_query($con,"UPDATE parking SET parking_iscardreturn='yes', parking_datecardreturn='$todayDate', parking_datelotclear='$todayDate' WHERE parking_id='$parking_id'");
 
         $_SESSION['message'] = 'Successfully update information';
 
@@ -360,10 +362,12 @@
         $todayDate = date('d/m/Y h:i:s a', time());
         // $todayTime = date('h:i a');
 
-        $query_updateHealth = mysqli_query($con, "UPDATE parking_lot SET lot_isreserve='no' WHERE lot_id='$lot_id'");
+        if($lot_id!=0){
+            $query_updateHealth = mysqli_query($con, "UPDATE parking_lot SET lot_isreserve='yes' WHERE lot_id='$lot_id'");
+        }
 
         $query_updateCard = mysqli_query($con,"UPDATE card SET card_isuse='yes' WHERE card_serialnum='$card_serialnum'");
-        $query_updateParking= mysqli_query($con,"UPDATE parking SET parking_iscardreturn='no', parking_datecardreturn='' WHERE parking_id='$parking_id'");
+        $query_updateParking= mysqli_query($con,"UPDATE parking SET parking_iscardreturn='no', parking_datecardreturn='', parking_datelotclear='' WHERE parking_id='$parking_id'");
 
         $_SESSION['message'] = 'Successfully update information';
 
@@ -379,11 +383,20 @@
         $todayDate = date('d/m/Y');
         // $todayTime = date('h:i a');
 
+        if($lot_id!='null'){
+            $query_updateLot = mysqli_query($con,"UPDATE parking_lot SET lot_isreserve='yes' WHERE lot_id='$lot_id'");
+        }
+        if($card_id!='null'){
+            $query_updateCard = mysqli_query($con,"UPDATE card SET card_isuse='yes' WHERE card_id='$card_id'");
+        }
+        
         $query_addParking = mysqli_query($con, "INSERT INTO parking(fk_user_id, fk_card_id, fk_lot_id, parking_iscardreturn, parking_datecardborrow,
          parking_datecardreturn) 
         VALUES ('$user_id','$card_id','$lot_id','no','$todayDate','')");
 
-        $query_updateCard = mysqli_query($con,"UPDATE card SET card_isuse='yes' WHERE card_id='$card_id'");
+        
+        
+        
 
         $_SESSION['message'] = 'Successfully update information';
 

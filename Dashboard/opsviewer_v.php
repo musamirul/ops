@@ -204,7 +204,7 @@
         <tbody>
           <?php
             $searchQuery = mysqli_query($con,"SELECT * FROM user
-            WHERE user_type='5'");
+            WHERE user_type='5' AND user_isactive='yes'");
             $count = 0;
             while($searchResult = mysqli_fetch_array($searchQuery))
             {

@@ -187,6 +187,11 @@
         <a href="opsviewer_info.php" class="btn btn-dark active" aria-current="page">Total Info <span class="badge bg-dark rounded-pill"></span></a>
       </div>
     </div>
+    <?php
+          $query_DashboardShow = mysqli_query($con,"SELECT * FROM info ORDER BY info_id DESC LIMIT 1");
+          $result_DashboardShow = mysqli_fetch_array($query_DashboardShow);
+        ?>
+    <div class="row bg-white shadow rounded-bottom me-1 ms-1 p-2 mb-2"><div class="col"><div class="float-end">Data As at : <b><?php echo $result_DashboardShow['info_date']; ?></b></div></div></div>
     <div class="row bg-white shadow rounded-bottom me-1 ms-1 p-2">
       <div class="col-2"></div>
       <div class="col ms-5">
@@ -206,10 +211,6 @@
         <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total oncall parking</span></div>
       </div>
       <div class="col-3 me-5">
-        <?php
-          $query_DashboardShow = mysqli_query($con,"SELECT * FROM info ORDER BY info_id DESC LIMIT 1");
-          $result_DashboardShow = mysqli_fetch_array($query_DashboardShow);
-        ?>
         <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded"><center><?php echo $result_DashboardShow['info_motorb1']; ?></center></div></div>
         <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_motorb2']; ?></center></div></div>
         <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_bayb2']; ?></center></div></div>
@@ -227,6 +228,7 @@
       </div>
     </div>      
 	</div>
+
 
 <footer class="text-center text-white fixed-bottom bg-dark mt-5">
     <div class="text-center p-1" style="background-color:rgba(0,0,0,0.2);">

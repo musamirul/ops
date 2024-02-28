@@ -70,7 +70,7 @@
                                         [<?php  echo $result_card['card_dateregister']; ?>]
                                                                                 
                                             <span class="badge <?php if($isactive=='yes'){echo 'bg-success';}else{echo 'bg-danger';} ?>"><?php if($isactive=='yes'){echo 'ACTIVE';}else{echo 'INACTIVE';} ?></span>
-                                            <span class="badge <?php if($isuse=='yes'){echo 'bg-success';}else{echo 'bg-danger';} ?>"><?php if($isuse=='yes'){echo 'UNUSED';}else{echo 'USED';} ?></span>
+                                            <span class="badge <?php if($isuse=='no'){echo 'bg-success';}else{echo 'bg-danger';} ?>"><?php if($isuse=='no'){echo 'UNUSED';}else{echo 'USED';} ?></span>
                                     </div>      
                                 </div>
                                 <div class="p-2">

@@ -5,8 +5,8 @@
             <div class="d-flex flex-row">
                 <div class=""><center><i style="font-size: 40px; color: rgb(99, 157, 243);" class="bi bi-person-plus pt-2"></i></center></div>
                 <div class="text-start ms-3">
-                    <span style="font-size: 23px;font-weight: bold;">Add Staff's Profile</span> <br/>
-                    <span style="font-size: 14px; color: grey;">Create New Staff Profile</span>
+                    <span style="font-size: 23px;font-weight: bold;">Add User's Profile</span> <br/>
+                    <span style="font-size: 14px; color: grey;">Create New User Profile</span>
                 </div>
             </div>
         </div>
@@ -16,22 +16,22 @@
                 <div class="row pt-3 mb-2">
                     <div class="col">
                         <div class="ms-3">
-                            <center><span style="font-size: 23px;font-weight: bold;">Staff's Profile</span></center>
+                            <center><span style="font-size: 23px;font-weight: bold;">User's Profile</span></center>
                         </div>
                     </div>
                 </div>
                 <form method="post">
                 <div class="col mb-3">
                     <div class="row-sm-4">
-                        <label class="form-label">Staff Name</label>
-                        <input class="form-control " name="Staff_Name" placeholder="Staff Full Name" required>
+                        <label class="form-label">User Full Name</label>
+                        <input class="form-control " name="Staff_Name" placeholder="User Full Name" required>
                     </div>
                     <div class="row-sm-4">
-                        <label class="form-label">Staff ID</label>
-                        <input class="form-control " name="Staff_Id" placeholder="Staff ID Number" required>
+                        <label class="form-label">Staff ID / Dr Code</label>
+                        <input class="form-control " name="Staff_Id" placeholder="User ID Number" required>
                     </div>
                     <div class="row-sm-4">
-                        <label class="form-label">Employee Type</label>
+                        <label class="form-label">Parking Type</label>
                         <select name="Staff_Type" class="form-select ">
                                 <?php
                                     $query_empShow = mysqli_query($con,"SELECT * FROM employee_type ORDER BY emptype_id");
@@ -284,7 +284,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                         <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel">Add Car to : <strong><?php echo $staff_name?></strong> ?</h5>
+                                                <h5 class="modal-title" id="editModalLabel">View Car : <strong><?php echo $staff_name?></strong> ?</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                             <div class="modal-body">
@@ -316,7 +316,6 @@
                                             <div class="modal-footer">
                                                     <input type="hidden" value="<?php echo $staff_id;?>" name="idAddCarHidden" />
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" name="addCar" class="btn btn-primary">Save</button>
                                             </div>   
                                         </div>
                                     </div>
@@ -576,7 +575,9 @@
         $positionEdit = $_POST['positionEdit'];
         $phoneEdit = $_POST['phoneEdit'];
         $isActiveEdit = $_POST['isActiveEdit'];
-
+        if($isActiveEdit==''){
+            $isActiveEdit = 'no';
+        }
 
         // $query_update = mysqli_query($con,"UPDATE staff SET Staff_FName='$nameEdit',Staff_Designation='$designationEdit',Staff_Ext='$extEdit',Staff_SpeedDial='$dialEdit',
         // Staff_Email='$emailEdit' WHERE Staff_ID='$idEdit'");
