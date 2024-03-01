@@ -187,46 +187,33 @@
         <a href="opsviewer_info.php" class="btn btn-dark active" aria-current="page">Total Info <span class="badge bg-dark rounded-pill"></span></a>
       </div>
     </div>
-    <?php
-          $query_DashboardShow = mysqli_query($con,"SELECT * FROM info ORDER BY info_id DESC LIMIT 1");
-          $result_DashboardShow = mysqli_fetch_array($query_DashboardShow);
-        ?>
-    <div class="row bg-white shadow rounded-bottom me-1 ms-1 p-2 mb-2"><div class="col"><div class="float-end">Data As at : <b><?php echo $result_DashboardShow['info_date']; ?></b></div></div></div>
-    <div class="row bg-white shadow rounded-bottom me-1 ms-1 p-2">
-      <div class="col-2"></div>
-      <div class="col ms-5">
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5" style="color:#E8B820">total motorcycle parking b1</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total motorcycle parking b2</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total parking bay basement 2</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total reserved parking (basement)</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total pregnant parking (patient)</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total MD/ED parking</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total oku parking</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total valet parking</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total dialysis parking</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total staff pregnant parking (outside)</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total A&E parking</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total ER doctor parking</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total ambulans parking</span></div>
-        <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5 mt-1" style="color:#E8B820">total oncall parking</span></div>
+    <!-- <div class="row bg-white shadow rounded-bottom me-1 ms-1 p-2 mb-2"><div class="col"><div class="float-end">Data As at : <b><?php echo $result_DashboardShow['info_date']; ?></b></div></div></div> -->
+    <div class="col-2"></div>
+    <div class="row bg-white me-1 ms-1 p-2">
+      <?php
+            $query_info = mysqli_query($con,"SELECT * FROM info_list ORDER BY infolist_id DESC ");
+            while($result_info = mysqli_fetch_array($query_info)){
+                $infolist_id = $result_info['infolist_id'];
+                $infolist_total = $result_info['infolist_total'];
+                $infolist_category = $result_info['fk_category_id'];
+
+                $query_category = mysqli_query($con,"SELECT * FROM info_category WHERE infoc_id='$infolist_category'");
+                $result_category = mysqli_fetch_array($query_category);
+                $category_name = $result_category['infoc_name'];
+            
+      ?>
+      <div class="row bg-white shadow rounded-bottom me-1 ms-1 pb-1">
+        <div class="col ms-5">
+          <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5" style="color:#E8B820"><?php echo $category_name; ?></span></div>
+        </div>
+        <div class="col-3 me-5">
+          <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded"><center><?php echo $infolist_total; ?></center></div></div>
+        </div>
       </div>
-      <div class="col-3 me-5">
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded"><center><?php echo $result_DashboardShow['info_motorb1']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_motorb2']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_bayb2']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_reserved']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_pregnantpt']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_mded']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_oku']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_valet']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_dialysis']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_pregnantstaff']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_ae']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_er']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_ambulance']; ?></center></div></div>
-        <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded mt-1"><center><?php echo $result_DashboardShow['info_oncall']; ?></center></div></div>
-      </div>
-    </div>      
+      <?php
+       }
+      ?>
+  </div>      
 	</div>
 
 

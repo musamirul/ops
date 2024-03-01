@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2024 at 06:03 PM
+-- Generation Time: Mar 01, 2024 at 06:03 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -78,7 +78,7 @@ INSERT INTO `car_record` (`car_id`, `car_platenum`, `car_model`, `car_brand`, `c
 CREATE TABLE IF NOT EXISTS `employee_type` (
 `emptype_id` int(11) NOT NULL,
   `emptype_name` varchar(100) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `employee_type`
@@ -117,37 +117,43 @@ INSERT INTO `health_record` (`health_id`, `health_type`, `health_startdate`, `he
 -- --------------------------------------------------------
 
 --
--- Table structure for table `info`
+-- Table structure for table `info_category`
 --
 
-CREATE TABLE IF NOT EXISTS `info` (
-`info_id` int(11) NOT NULL,
-  `info_motorb1` varchar(50) NOT NULL,
-  `info_motorb2` varchar(50) NOT NULL,
-  `info_bayb2` varchar(50) NOT NULL,
-  `info_reserved` varchar(50) NOT NULL,
-  `info_pregnantpt` varchar(50) NOT NULL,
-  `info_mded` varchar(50) NOT NULL,
-  `info_oku` varchar(50) NOT NULL,
-  `info_valet` varchar(50) NOT NULL,
-  `info_dialysis` varchar(50) NOT NULL,
-  `info_pregnantstaff` varchar(50) NOT NULL,
-  `info_ae` varchar(50) NOT NULL,
-  `info_er` varchar(50) NOT NULL,
-  `info_ambulance` varchar(50) NOT NULL,
-  `info_oncall` varchar(50) NOT NULL,
-  `info_date` varchar(100) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+CREATE TABLE IF NOT EXISTS `info_category` (
+`infoc_id` int(11) NOT NULL,
+  `infoc_name` varchar(250) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Dumping data for table `info`
+-- Dumping data for table `info_category`
 --
 
-INSERT INTO `info` (`info_id`, `info_motorb1`, `info_motorb2`, `info_bayb2`, `info_reserved`, `info_pregnantpt`, `info_mded`, `info_oku`, `info_valet`, `info_dialysis`, `info_pregnantstaff`, `info_ae`, `info_er`, `info_ambulance`, `info_oncall`, `info_date`) VALUES
-(1, '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', ''),
-(2, '15', '12', '13', '14', '2', '1', '3', '4', '18', '20', '21', '1', '1', '5', ''),
-(3, '0', '0', '0', '0', '3', '3', '0', '6', '0', '4', '0', '3', '2', '6', ''),
-(4, '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '2', '3', '4', '5', '29/02/2024 12:27:45 am');
+INSERT INTO `info_category` (`infoc_id`, `infoc_name`) VALUES
+(3, 'Total Parking Basement 1'),
+(4, 'Total Parking Basement 2'),
+(5, 'Motorcycle parking b1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `info_list`
+--
+
+CREATE TABLE IF NOT EXISTS `info_list` (
+`infolist_id` int(11) NOT NULL,
+  `infolist_total` int(50) NOT NULL,
+  `fk_category_id` int(50) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `info_list`
+--
+
+INSERT INTO `info_list` (`infolist_id`, `infolist_total`, `fk_category_id`) VALUES
+(2, 20, 5),
+(4, 15, 3),
+(5, 3, 4);
 
 -- --------------------------------------------------------
 
@@ -276,10 +282,16 @@ ALTER TABLE `health_record`
  ADD PRIMARY KEY (`health_id`);
 
 --
--- Indexes for table `info`
+-- Indexes for table `info_category`
 --
-ALTER TABLE `info`
- ADD PRIMARY KEY (`info_id`);
+ALTER TABLE `info_category`
+ ADD PRIMARY KEY (`infoc_id`);
+
+--
+-- Indexes for table `info_list`
+--
+ALTER TABLE `info_list`
+ ADD PRIMARY KEY (`infolist_id`);
 
 --
 -- Indexes for table `parking`
@@ -323,17 +335,22 @@ MODIFY `car_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
 -- AUTO_INCREMENT for table `employee_type`
 --
 ALTER TABLE `employee_type`
-MODIFY `emptype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `emptype_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `health_record`
 --
 ALTER TABLE `health_record`
 MODIFY `health_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 --
--- AUTO_INCREMENT for table `info`
+-- AUTO_INCREMENT for table `info_category`
 --
-ALTER TABLE `info`
-MODIFY `info_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+ALTER TABLE `info_category`
+MODIFY `infoc_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `info_list`
+--
+ALTER TABLE `info_list`
+MODIFY `infolist_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `parking`
 --
