@@ -29,7 +29,8 @@
     	<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
         	<div class="position-sticky">
             	<div class="list-group list-group-flush mt-4">
-                	<a href="Admin_Dashboard.php" class="list-group-item list-group-item-action py-2" aria-current="true"><i class="bi bi-house-door-fill me-3"></i><span>Dashboard</span></a>
+                	<!-- <a href="Admin_Dashboard.php" class="list-group-item list-group-item-action py-2" aria-current="true"><i class="bi bi-house-door-fill me-3"></i><span>Dashboard</span></a> -->
+                	<a href="opsviewer.php" class="list-group-item list-group-item-action py-2" aria-current="true" target="_blank"><i class="bi bi-house-door-fill me-3"></i><span>Viewer</span></a>
 
                     <a href="#ConsultantCollapse" aria-current="true" aria-controls="ConsultantCollapse" data-bs-toggle="collapse" aria-expanded="true" class="list-group-item list-group-item-action py-2"><i class="bi bi-person-square me-3"></i><span>Staff Management</span></a>
                     <ul class="collapse list-group list-group-flush ps-4" id="ConsultantCollapse">

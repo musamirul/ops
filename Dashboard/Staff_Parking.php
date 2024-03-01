@@ -152,7 +152,8 @@
                             <th><?php echo $parking_datelotclear ?></th>
                             <th><?php if($fk_card_id!=0){ ?>
                                     <?php if($result_health['parking_iscardreturn']=='yes'){ ?>
-                                        <button type="submit"  class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#returnCard<?php echo $parking_id ?>">Return Card</button>
+                                        <!-- <button type="submit"  class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#returnCard<?php //echo $parking_id ?>">Return Card</button> -->
+                                        card returned
                                     <?php }elseif($result_health['parking_iscardreturn']=='no'){ ?>
                                         <button type="submit"  class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#receiveCard<?php echo $parking_id ?>">Receive Card</button>
                                     <?php } ?>

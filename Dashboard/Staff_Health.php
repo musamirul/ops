@@ -141,7 +141,7 @@
                             <th><?php echo $result_health['health_type']; ?></th>
                             <th><?php echo $result_health['health_remark']; ?></th>
                             <th><?php echo $result_health['health_recorddate']; ?></th>
-                            <th><?php echo $result_health['health_iscomplete']; ?></th>
+                            <th><?php if($result_health['health_iscomplete']=='yes'){echo 'completed';}else{echo 'ongoing';} ?></th>
                             <th>
                                 <?php if($result_health['health_iscomplete']=='yes'){ ?>
                                     <button type="submit"  class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#complete<?php echo $health_id ?>">Not Complete</button>
