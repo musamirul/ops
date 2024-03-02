@@ -213,6 +213,13 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-12">
+                                                    <label>Start Date</label>
+                                                        <!-- <input class="form-control" type="date" name="health_startdate" required autofocus="autofocus" /> -->
+                                                        <input class="filterdate form-control" type="text" value="<?php echo $result_health['health_startdate'];  ?>" name="health_startdate"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
                                                     <label>Remark</label>
                                                         <input class="form-control" placeholder="Enter Remark" name="health_remark" value="<?php echo $result_health['health_remark']; ?>" required autofocus="autofocus" />
                                                     </div>

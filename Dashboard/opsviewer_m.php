@@ -235,6 +235,20 @@
               $result_department = mysqli_fetch_array($query_department);
               $services_name = $result_department['services_name'];
 
+              
+              $query_parking = mysqli_query($con,"SELECT * FROM parking WHERE fk_user_id = '$user_id' AND parking_iscardreturn = 'no'");
+              $result_parking = mysqli_fetch_array($query_parking);
+              $fk_card_id = $result_parking['fk_card_id'];
+              $fk_lot_id = $result_parking['fk_lot_id'];
+
+              $query_card = mysqli_query($con,"SELECT * FROM card WHERE card_id = '$fk_card_id'");
+              $result_card = mysqli_fetch_array($query_card);
+              $card_serialnum = $result_card['card_serialnum'];
+
+              $query_lot = mysqli_query($con,"SELECT * FROM parking_lot WHERE lot_id ='$fk_lot_id'");
+              $result_lot = mysqli_fetch_array($query_lot);
+              $lot_number = $result_lot['lot_number'];
+
               $query_emptype = mysqli_query($con,"SELECT * FROM employee_type WHERE emptype_id = '$user_type'");
               $result_emptype = mysqli_fetch_array($query_emptype);
               $emptype_name = $result_emptype['emptype_name'];
@@ -247,7 +261,6 @@
             <td><center><?php echo $user_phone; ?></center></td>
             <td><center><?php echo $services_name; ?></center></td>
             <td><center><?php echo $user_position; ?></center></td>
-            <td><center><?php echo $health_duration; ?></center></td>
             <td><center><?php echo $card_serialnum; ?></center></td>
             <td><center><?php echo $lot_number; ?></center></td>
             <td>
