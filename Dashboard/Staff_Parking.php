@@ -100,7 +100,7 @@
             <div class="btn-group mt-2 shadow" style="width:500px">
                 <a href="Staff_Health.php" class="btn btn-primary">Health Record</a>
                 <a href="Staff_Parking.php" class="btn btn-primary active" aria-current="page">Parking Record</a>
-                <a href="#" class="btn btn-primary">Profile</a>
+                <a href="Staff_Car.php" class="btn btn-primary">Car Record</a>
             </div>
             </center>
         </div>

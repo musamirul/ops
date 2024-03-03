@@ -28,6 +28,7 @@
     <script src="Interface/style/chosen/chosen.jquery.js"></script>
     <script src="Interface/style/DataTables/js/jquery.dataTables.min.js"></script>
     <script src="Interface/style/DataTables/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="Interface/style/summernote/summernote-lite.js"></script>
@@ -120,9 +121,7 @@ if (toastTrigger) {
       })
     </script>
 
-
-
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   $(function() {
 
     $('input[class="filterdate form-control"]').daterangepicker({
@@ -141,7 +140,18 @@ if (toastTrigger) {
     });
 
   });
+</script> -->
+<script>
+  $(function() {
+    $('input[class="filterdate form-control"]').daterangepicker({
+      opens: 'left'
+    }, function(start, end, label) {
+      console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+    });
+  });
 </script>
+
+
 
   </body>
 </html>
