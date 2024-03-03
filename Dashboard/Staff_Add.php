@@ -559,6 +559,10 @@
         $idDelete = $_POST['idDelete'];
 
         $query_deleteStaff = mysqli_query($con, "DELETE FROM user WHERE user_id = '$idDelete'");
+        $query_deleteCar = mysqli_query($con,"DELETE FROM car_record WHERE fk_staff_id = '$idDelete'");
+        $query_deleteParking = mysqli_query($con,"DELETE FROM parking WHERE fk_user_id = '$idDelete'");
+        $query_deleteHealth = mysqli_query($con,"DELETE FROM health_record WHERE fk_staff_id = '$idDelete'");
+
         $_SESSION['message'] = 'Successfully delete information';   
         echo '<script>window.location.href="Staff_Add.php?msg=success"</script>';
 
