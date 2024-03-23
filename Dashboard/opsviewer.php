@@ -244,7 +244,7 @@
                 $car_platenum = $result_showCar['car_platenum'];
                 
             ?>
-              <span style="font-size:12px" class="badge bg-dark rounded-pill"><?php echo $car_platenum.' ['.$car_brand.' '.$car_model.']'; ?></span>
+              <span style="font-size:12px;font-family:arial" class="badge bg-dark p-2"><?php echo $car_platenum.' ['.$car_brand.' '.$car_model.']'; ?></span>
             <?php
                 }
             ?>

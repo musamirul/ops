@@ -204,10 +204,10 @@
       ?>
       <div class="row bg-white shadow rounded-bottom me-1 ms-1 pb-1">
         <div class="col ms-5">
-          <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-3 ps-5" style="color:#E8B820"><?php echo $category_name; ?></span></div>
+          <div class="row"><span class="bg-dark bg-gradient shadow-sm fw-bold fs-5 ps-5" style="color:#E8B820"><?php echo $category_name; ?></span></div>
         </div>
         <div class="col-3 me-5">
-          <div class="row ps-2"><div style="width:150px" class="fs-3 fw-bold text-white bg-dark rounded"><center><?php echo $infolist_total; ?></center></div></div>
+          <div class="row ps-2"><div style="width:150px" class="fs-5 fw-bold text-white bg-dark rounded"><center><?php echo $infolist_total; ?></center></div></div>
         </div>
       </div>
       <?php
